@@ -1,0 +1,177 @@
+
+//color variables
+
+$bg-text-dark: #182748
+$bg-text-accent: #103B99
+$bg-text-light: #F0F0FD
+
+$text-light: #EBEBF0
+
+//font-size variables
+
+$text-normal: 15px
+$text-l: 20px
+$text-xl: 30px
+$text-xxl: 50px
+
+
+
+//basic styles
+
+*
+  margin: 0
+  font-family: Roboto, Tahoma, sans-serif
+
+h2
+  text-align: center
+  font-size: $text-xl
+  text-transform: uppercase
+  &:after
+    content: ''
+    display: block
+    height: 2px
+    width: 70px
+    margin: 30px auto
+    background-color: $bg-text-accent
+
+
+//header styles
+
+header
+  background-color: $bg-text-dark
+  height: 75px
+  color: $text-light
+  display: flex
+  align-items: center
+  text-transform: uppercase
+  font-size: $text-l
+  .container
+    padding: 0 85px
+  nav
+    text-align: end
+    ul
+      margin: 0
+      li
+        display: inline-block
+        list-style: none
+        margin-left: 30px
+        a
+          position: relative
+          &:after
+            content: ''
+            height: 2px
+            margin-top: 8px
+            background-color: $bg-text-accent
+            width: 100%
+            display: block
+            position: absolute
+            transform: scale(0)
+            transition: 0.3s
+        &:hover a:after
+          transform: scale(1)
+  a
+    text-decoration: none
+    color: inherit
+
+
+//home section styles
+
+.home
+  min-height: calc(100vh - 75px)
+  background: url("/img/home-bg.png") center -75px no-repeat
+  color: $text-light
+  text-align: right
+  .container
+    padding: 0 85px
+  &-tag
+    font-size: $text-l
+    font-weight: 400
+    padding-top: 210px
+    margin-bottom: 14px
+  h1
+    font-size: $text-xxl
+    font-weight: 700
+    letter-spacing: 2px
+    span
+      color: $bg-text-accent
+    &:after
+      content: ''
+      display: block
+      height: 2px
+      width: 70px
+      background-color: $bg-text-accent
+      position: absolute
+      right: 15px
+      bottom: -20px
+  &-description
+    font-size: $text-normal
+    font-weight: 300
+    margin-top: 46px
+  .row-button
+    perspective: 10px
+    perspective-origin: right
+  &-button
+    height: 45px
+    width: 145px
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: $bg-text-accent
+    border-radius: 22px
+    margin-right: 15px
+    margin-top: 57px
+    text-transform: uppercase
+    font-size: $text-normal
+    transition: 0.5s
+    color: $text-light
+    text-decoration: none
+    &:hover
+      transform: translateZ(1px) rotateY(-0.5deg)
+      box-shadow: -15px 18px 20px 0px #000
+    &:active
+      transform: translateZ(-0.25px)
+
+
+//advantages section styles
+
+.advantages
+  padding: 105px 0
+  background-color: $bg-text-light
+  color: $bg-text-dark
+  &-tagline
+    text-align: center
+    font-size: $text-normal
+    padding: 0 60px
+  &-block
+    display: flex
+    margin-top: 30px
+    &-item
+      width: 25%
+      text-align: center
+      padding-bottom: 35px
+      transition: 1s
+      border-radius: 10px
+      perspective: 300px
+      &:hover
+        box-shadow: inset 0px 0px 20px 2px rgba(0, 0, 0, 0.3)
+        img
+          filter: drop-shadow(0px 15px 3px rgba(0,0,0,0.4))
+          transform: translateZ(10px)
+        h3, p
+          transform: translateZ(-2px)
+      img
+        height: 70px
+        margin-bottom: 52px
+        margin-top: 30px
+        filter: drop-shadow(0px 7px 3px rgba(0,0,0,0.4))
+        transition: 1s
+      h3
+        margin-bottom: 30px
+        font-size: $text-l
+        text-transform: uppercase
+        transition: 1s
+      p
+        padding: 0 33px
+        transition: 1s
+        font-size: $text-normal
+
