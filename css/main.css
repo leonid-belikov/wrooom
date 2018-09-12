@@ -5,14 +5,17 @@
 h2 {
   text-align: center;
   font-size: 30px;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  margin-top: -7px; }
   h2:after {
     content: "";
     display: block;
     height: 2px;
     width: 70px;
-    margin: 30px auto;
-    background-color: #103B99; }
+    margin: 23px auto 0; }
+
+.footer {
+  height: 100vh; }
 
 header {
   background-color: #182748;
@@ -109,10 +112,13 @@ header {
   padding: 105px 0;
   background-color: #F0F0FD;
   color: #182748; }
+  .advantages h2:after {
+    background-color: #103B99; }
   .advantages-tagline {
     text-align: center;
     font-size: 15px;
-    padding: 0 60px; }
+    padding: 0 60px;
+    margin-top: 30px; }
   .advantages-block {
     display: flex;
     margin-top: 30px; }
@@ -123,13 +129,9 @@ header {
       transition: 1s;
       border-radius: 10px;
       perspective: 300px; }
-      .advantages-block-item:hover {
-        box-shadow: inset 0px 0px 20px 2px rgba(0, 0, 0, 0.3); }
-        .advantages-block-item:hover img {
-          filter: drop-shadow(0px 15px 3px rgba(0, 0, 0, 0.4));
-          transform: translateZ(10px); }
-        .advantages-block-item:hover h3, .advantages-block-item:hover p {
-          transform: translateZ(-2px); }
+      .advantages-block-item:hover img {
+        filter: drop-shadow(0px 15px 3px rgba(0, 0, 0, 0.4));
+        transform: translateZ(10px); }
       .advantages-block-item img {
         height: 70px;
         margin-bottom: 52px;
@@ -145,3 +147,21 @@ header {
         padding: 0 33px;
         transition: 1s;
         font-size: 15px; }
+
+.reviews {
+  padding: 105px 0;
+  height: 490px;
+  position: relative;
+  overflow: hidden;
+  color: #EBEBF0; }
+  .reviews h2:after {
+    background-color: #EBEBF0; }
+  .reviews-bg {
+    background-image: url("/img/reviews-bg.png");
+    background-size: cover;
+    height: 150%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1; }

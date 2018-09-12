@@ -26,13 +26,16 @@ h2
   text-align: center
   font-size: $text-xl
   text-transform: uppercase
+  margin-top: -7px
   &:after
     content: ''
     display: block
     height: 2px
     width: 70px
-    margin: 30px auto
-    background-color: $bg-text-accent
+    margin: 23px auto 0
+
+.footer
+  height: 100vh
 
 
 //header styles
@@ -138,10 +141,13 @@ header
   padding: 105px 0
   background-color: $bg-text-light
   color: $bg-text-dark
+  h2:after
+    background-color: $bg-text-accent
   &-tagline
     text-align: center
     font-size: $text-normal
     padding: 0 60px
+    margin-top: 30px
   &-block
     display: flex
     margin-top: 30px
@@ -153,12 +159,12 @@ header
       border-radius: 10px
       perspective: 300px
       &:hover
-        box-shadow: inset 0px 0px 20px 2px rgba(0, 0, 0, 0.3)
+        //box-shadow: inset 0px 0px 20px 2px rgba(0, 0, 0, 0.3)
         img
           filter: drop-shadow(0px 15px 3px rgba(0,0,0,0.4))
           transform: translateZ(10px)
         h3, p
-          transform: translateZ(-2px)
+          //transform: translateZ(-2px)
       img
         height: 70px
         margin-bottom: 52px
@@ -175,3 +181,24 @@ header
         transition: 1s
         font-size: $text-normal
 
+
+//reviews section styles
+
+.reviews
+  padding: 105px 0
+  height: 490px
+  //background-color: #cfff13
+  position: relative
+  overflow: hidden
+  color: $text-light
+  h2:after
+    background-color: $text-light
+  &-bg
+    background-image: url('/img/reviews-bg.png')
+    background-size: cover
+    height: 150%
+    position: absolute
+    bottom: 0
+    left: 0
+    right: 0
+    z-index: -1
