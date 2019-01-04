@@ -149,7 +149,7 @@ header {
         font-size: 15px; }
 
 .reviews {
-  padding: 105px 0;
+  padding: 100px 0;
   height: 490px;
   position: relative;
   overflow: hidden;
@@ -165,3 +165,21 @@ header {
     left: 0;
     right: 0;
     z-index: -1; }
+  .reviews .wrap {
+    height: 235px; }
+    .reviews .wrap .content {
+      padding: 0 90px; }
+    .reviews .wrap .arrow {
+      display: flex;
+      height: 100%; }
+      .reviews .wrap .arrow img {
+        margin: auto 0; }
+    .reviews .wrap .right-arrow {
+      justify-content: flex-end; }
+      .reviews .wrap .right-arrow img {
+        transform: rotateZ(180deg); }
+    .reviews .wrap .review {
+      font-size: 20px; }
+      .reviews .wrap .review .text {
+        margin: 60px 0;
+        font-style: italic; }
