@@ -3,6 +3,7 @@ window.onload = function () {
 
    var reviews = function () {
 
+      var reviewBox = document.querySelector('.reviews .content .review');
       var reviewTextBox = document.querySelector('.reviews .content .text');
       var reviewAuthorBox = document.querySelector('.reviews .content .author');
       var leftArrowButton = document.querySelector('.left-arrow');
@@ -34,6 +35,30 @@ window.onload = function () {
       var deactivateArrow = function (elem) {
          elem.innerHTML = '<img src="img/arrow.png">';
       };
+      var changeReview = function (side) {
+         var style = reviewBox.style;
+         var firstMove = side === "toLeft" ? '-30vw' : '30vw';
+         var secondMove = side === "toRight" ? '-30vw' : '30vw';
+         style.transition = '0.25s';
+         style.transform = 'translateX(' + firstMove + ') scale(0.01)';
+         style.visibility = 'hidden';
+         setTimeout(function () {
+            style.transform = 'translateX(' + secondMove + ') scale(0.01)';
+            setTimeout(function () {
+               switch (side) {
+                  case "toLeft":
+                     currentReview = currentReview === 0 ? reviewsArr.length - 1 : currentReview - 1;
+                     break;
+                  case "toRight":
+                     currentReview = currentReview === reviewsArr.length - 1 ? 0 : currentReview + 1;
+                     break;
+               }
+               reloadReview();
+               style.visibility = 'visible';
+               style.transform = 'translateX(0) scale(1)';
+            }, 250);
+         }, 250);
+      };
 
 
 
@@ -56,13 +81,13 @@ window.onload = function () {
       };
 
       leftArrowButton.onclick = function () {
-         currentReview = currentReview === 0 ? reviewsArr.length - 1 : currentReview - 1;
-         reloadReview();
+         var side = 'toLeft';
+         changeReview(side);
       };
 
       rightArrowButton.onclick = function () {
-         currentReview = currentReview === reviewsArr.length - 1 ? 0 : currentReview + 1;
-         reloadReview();
+         var side = 'toRight';
+         changeReview(side);
       };
 
 
