@@ -4,15 +4,19 @@
 $bg-text-dark: #182748
 $bg-text-accent: #103B99
 $bg-text-light: #F0F0FD
+$bg-text-extra-light: #FFF
 
 $text-light: #EBEBF0
 
+$line-gray: #c6c6c6
+
 //font-size variables
 
-$text-normal: 15px
+$text-normal: 16px
 $text-l: 20px
 $text-xl: 30px
 $text-xxl: 50px
+$text-xxxl: 75px
 
 
 
@@ -21,6 +25,7 @@ $text-xxl: 50px
 *
   margin: 0
   font-family: Roboto, Tahoma, sans-serif
+  box-sizing: border-box
 
 h2
   text-align: center
@@ -80,7 +85,8 @@ header
 //home section styles
 
 .home
-  min-height: calc(100vh - 75px)
+  height: calc(100vh - 75px)
+  min-height: 600px
   background: url("/img/home-bg.png") center -75px no-repeat
   color: $text-light
   text-align: right
@@ -95,6 +101,7 @@ header
     font-size: $text-xxl
     font-weight: 700
     letter-spacing: 2px
+    text-transform: uppercase
     span
       color: $bg-text-accent
     &:after
@@ -150,6 +157,7 @@ header
     margin-top: 30px
   &-block
     display: flex
+    justify-content: space-between
     margin-top: 30px
     &-item
       width: 25%
@@ -181,8 +189,8 @@ header
 //reviews section styles
 
 .reviews
-  padding: 100px 0
-  height: 470px
+  padding: 105px 0
+  height: 490px
   position: relative
   overflow: hidden
   color: $text-light
@@ -215,3 +223,102 @@ header
       .text
         margin: 60px 0
         font-style: italic
+        line-height: 1.5em
+
+
+//courses section styles
+
+$button-height: 45px
+$line-width: 1px
+
+$bg-hoverbox: rgba(0, 0, 0, 0.3)
+$text-hoverbox: rgba(255, 255, 255, 0.5)
+
+.courses
+  padding: 105px 0
+  min-height: 910px
+  background: $bg-text-light
+  color: $bg-text-dark
+  h2
+    text-align: start
+  h2:after
+    background-color: $bg-text-accent
+    margin-left: 0
+  .courses-block
+    margin-top: 60px
+    padding: 0 15px
+    display: flex
+    justify-content: space-between
+    .courses-block-item
+      width: calc(100%/3 - 20px)
+      max-width: 380px
+      margin-bottom: 30px
+      position: relative
+      img
+        display: block
+        width: 100%
+      .hover-box
+        opacity: 0
+        transition: 1s
+        background: $bg-hoverbox
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 246px
+        text-transform: uppercase
+        font-size: $text-xxxl
+        padding: 40px 40px 40px 0
+        &:hover
+          opacity: 1
+          cursor: pointer
+          padding-left: 40px
+          color: $text-hoverbox
+          font-weight: bold
+      .content
+        border: solid 1px $line-gray
+        border-top: none
+        padding: 30px
+        background: $bg-text-extra-light
+        h3
+          text-transform: uppercase
+          &:after
+            content: ''
+            display: block
+            height: 2px
+            width: 70px
+            margin: 23px 0
+            background-color: $bg-text-accent
+        p
+          font-size: $text-normal
+          font-weight: 300
+          line-height: 1.5em
+        .cost
+          font-size: 36px
+          font-weight: bold
+          margin: 25px 0
+        .buttons
+          display: flex
+          justify-content: space-between
+          .button
+            width: calc(50% - 15px)
+            height: $button-height
+            border: solid $line-width $bg-text-accent
+            border-radius: ($button-height - 3)/2
+            text-transform: uppercase
+            text-align: center
+            padding-top: ($button-height - $text-normal - $line-width * 4)/2
+            &:hover
+              cursor: pointer
+            &.send
+              background-color: $bg-text-accent
+              color: $bg-text-extra-light
+              &:hover
+                border-color: $bg-text-dark
+                background-color: $bg-text-dark
+            &.read
+              background-color: $bg-text-extra-light
+              color: $bg-text-accent
+              &:hover
+                background-color: $bg-text-accent
+                color: $bg-text-extra-light
