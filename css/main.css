@@ -175,7 +175,8 @@ header {
       padding: 0 90px; }
     .reviews .wrap .arrow {
       display: flex;
-      height: 100%; }
+      height: 100%;
+      cursor: pointer; }
       .reviews .wrap .arrow img {
         margin: auto 0; }
     .reviews .wrap .right-arrow {
@@ -199,6 +200,27 @@ header {
   .courses h2:after {
     background-color: #103B99;
     margin-left: 0; }
+  .courses .container {
+    position: relative; }
+  .courses .button {
+    height: 45px;
+    border: solid 1px #103B99;
+    border-radius: 21px;
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 12.5px;
+    cursor: pointer; }
+  .courses .button-show {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 15px;
+    width: 180px;
+    background-color: #FFF;
+    color: #103B99; }
+    .courses .button-show:hover {
+      background-color: #103B99;
+      color: #FFF; }
   .courses .courses-block {
     margin-top: 60px;
     padding: 0 15px;
@@ -211,7 +233,10 @@ header {
       position: relative; }
       .courses .courses-block .courses-block-item img {
         display: block;
-        width: 100%; }
+        width: 100%;
+        height: 246px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px; }
       .courses .courses-block .courses-block-item .hover-box {
         opacity: 0;
         transition: 1s;
@@ -223,7 +248,9 @@ header {
         height: 246px;
         text-transform: uppercase;
         font-size: 75px;
-        padding: 40px 40px 40px 0; }
+        padding: 40px 40px 40px 0;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px; }
         .courses .courses-block .courses-block-item .hover-box:hover {
           opacity: 1;
           cursor: pointer;
@@ -234,7 +261,9 @@ header {
         border: solid 1px #c6c6c6;
         border-top: none;
         padding: 30px;
-        background: #FFF; }
+        background: #FFF;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px; }
         .courses .courses-block .courses-block-item .content h3 {
           text-transform: uppercase; }
           .courses .courses-block .courses-block-item .content h3:after {
@@ -256,15 +285,7 @@ header {
           display: flex;
           justify-content: space-between; }
           .courses .courses-block .courses-block-item .content .buttons .button {
-            width: calc(50% - 15px);
-            height: 45px;
-            border: solid 1px #103B99;
-            border-radius: 21px;
-            text-transform: uppercase;
-            text-align: center;
-            padding-top: 12.5px; }
-            .courses .courses-block .courses-block-item .content .buttons .button:hover {
-              cursor: pointer; }
+            width: calc(50% - 15px); }
             .courses .courses-block .courses-block-item .content .buttons .button.send {
               background-color: #103B99;
               color: #FFF; }

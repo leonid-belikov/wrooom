@@ -212,6 +212,7 @@ header
     .arrow
       display: flex
       height: 100%
+      cursor: pointer
       img
         margin: auto 0
     .right-arrow
@@ -234,6 +235,8 @@ $line-width: 1px
 $bg-hoverbox: rgba(0, 0, 0, 0.3)
 $text-hoverbox: rgba(255, 255, 255, 0.5)
 
+$card-border-radius: 5px
+
 .courses
   padding: 105px 0
   min-height: 910px
@@ -244,6 +247,27 @@ $text-hoverbox: rgba(255, 255, 255, 0.5)
   h2:after
     background-color: $bg-text-accent
     margin-left: 0
+  .container
+    position: relative
+  .button
+    height: $button-height
+    border: solid $line-width $bg-text-accent
+    border-radius: ($button-height - 3)/2
+    text-transform: uppercase
+    text-align: center
+    padding-top: ($button-height - $text-normal - $line-width * 4)/2
+    cursor: pointer
+  .button-show
+    display: none
+    position: absolute
+    top: 0
+    right: 15px
+    width: 180px
+    background-color: $bg-text-extra-light
+    color: $bg-text-accent
+    &:hover
+      background-color: $bg-text-accent
+      color: $bg-text-extra-light
   .courses-block
     margin-top: 60px
     padding: 0 15px
@@ -257,6 +281,9 @@ $text-hoverbox: rgba(255, 255, 255, 0.5)
       img
         display: block
         width: 100%
+        height: 246px
+        border-top-left-radius: $card-border-radius
+        border-top-right-radius: $card-border-radius
       .hover-box
         opacity: 0
         transition: 1s
@@ -269,6 +296,8 @@ $text-hoverbox: rgba(255, 255, 255, 0.5)
         text-transform: uppercase
         font-size: $text-xxxl
         padding: 40px 40px 40px 0
+        border-top-left-radius: $card-border-radius
+        border-top-right-radius: $card-border-radius
         &:hover
           opacity: 1
           cursor: pointer
@@ -280,6 +309,8 @@ $text-hoverbox: rgba(255, 255, 255, 0.5)
         border-top: none
         padding: 30px
         background: $bg-text-extra-light
+        border-bottom-left-radius: $card-border-radius
+        border-bottom-right-radius: $card-border-radius
         h3
           text-transform: uppercase
           &:after
@@ -302,14 +333,6 @@ $text-hoverbox: rgba(255, 255, 255, 0.5)
           justify-content: space-between
           .button
             width: calc(50% - 15px)
-            height: $button-height
-            border: solid $line-width $bg-text-accent
-            border-radius: ($button-height - 3)/2
-            text-transform: uppercase
-            text-align: center
-            padding-top: ($button-height - $text-normal - $line-width * 4)/2
-            &:hover
-              cursor: pointer
             &.send
               background-color: $bg-text-accent
               color: $bg-text-extra-light

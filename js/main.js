@@ -151,25 +151,69 @@ var courses = function () {
          header: 'driving course III',
          text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eligendi error est illo perspiciatis.',
          cost: 400
+      },
+		{
+			labelSrc: '/img/course1-label.png',
+			header: 'driving course IV',
+			text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.',
+			cost: 1200
+		},
+      {
+         labelSrc: '/img/course2-label.png',
+         header: 'driving course V',
+         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis cupiditate impedit quae. Ab, aspernatur.',
+         cost: 1300
+      },
+      {
+         labelSrc: '/img/course3-label.png',
+         header: 'driving course VI',
+         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eligendi error est illo perspiciatis.',
+         cost: 1400
       }
    ];
    var crsItem;
+   var crsItemsNum = crsArr.length > 3 ? 3 : crsArr.length;
+   var showAll = crsItemsNum === crsArr.length;
    var hoverText = 'read more';
+   var showButton = document.querySelector('.button-show');
+   var addCrsItems = function (first, count) {
+		for (var i=first; i<count; i++) {
+			var img = '<img src="' + crsArr[i].labelSrc + '" alt="">';
+			var hoverBox = '<div class="hover-box">' + hoverText + '</div>';
+			var h = '<h3>' + crsArr[i].header + '</h3>';
+			var p = '<p>' + crsArr[i].text + '</p>';
+			var cost = '<div class="cost">$ ' + crsArr[i].cost + '</div>';
+			var btns = '<div class="buttons"><div class="button send">send request</div><div class="button read">read more</div></div>';
+			var contentBox = '<div class="content">' + h + p + cost + btns + '</div>';
 
-   for (var i=0; i<crsArr.length; i++) {
-      var img = '<img src="' + crsArr[i].labelSrc + '" alt="">';
-      var hoverBox = '<div class="hover-box">' + hoverText + '</div>';
-      var h = '<h3>' + crsArr[i].header + '</h3>';
-      var p = '<p>' + crsArr[i].text + '</p>';
-      var cost = '<div class="cost">$ ' + crsArr[i].cost + '</div>';
-      var btns = '<div class="buttons"><div class="button send">send request</div><div class="button read">read more</div></div>';
-      var contentBox = '<div class="content">' + h + p + cost + btns + '</div>';
+			crsItem = document.createElement('div');
+			crsItem.className = 'courses-block-item';
+			crsItem.innerHTML = img + hoverBox + contentBox;
+			crsBox.appendChild(crsItem);
+		}
+	};
 
-      crsItem = document.createElement('div');
-      crsItem.className = 'courses-block-item';
-      crsItem.innerHTML = img + hoverBox + contentBox;
-      crsBox.appendChild(crsItem);
-   }
+	addCrsItems(0, crsItemsNum);
+
+   if (!showAll) {
+		showButton.style.display = 'block';
+		showButton.innerText = 'view all courses';
+	}
+
+	showButton.onclick = function () {
+		if (!showAll) {
+			addCrsItems(crsItemsNum, crsArr.length);
+			showAll = true;
+			showButton.innerText = 'only top courses';
+		} else {
+			while (crsBox.childElementCount > crsItemsNum) {
+				crsBox.removeChild(crsBox.children[crsBox.childElementCount-1]);
+			}
+			showAll = false;
+			showButton.innerText = 'view all courses';
+		}
+	};
+
 
 };
 
