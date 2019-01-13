@@ -11,7 +11,7 @@ var App = (function () {
 			Footer.init();
 
 			document.addEventListener('onViewAllCourses', function (event) {
-				console.log('event onViewAllCourses happened with detail: ' + event.detail);
+				CrsPopup.init(event.detail);
 			})
 		}
 	}
@@ -26,9 +26,24 @@ var Header = (function () {
 })();
 
 var Home = (function () {
+
+	var homeBox = document.querySelector('.home .container');
+
 	return {
 		init: function () {
-			console.log('home initialized');
+
+			homeBox.onclick = function (event) {
+				var target = event.target;
+				var targetClass = target.className;
+				var onViewAllCourses;
+				var crsId = null;
+
+				if (targetClass.indexOf('read') >= 0) {
+					onViewAllCourses = new CustomEvent('onViewAllCourses', { 'detail' : crsId } );
+					document.dispatchEvent(onViewAllCourses);
+				}
+			}
+
 		}
 	}
 })();
@@ -186,6 +201,7 @@ var Reviews = (function () {
 
 var Courses = (function () {
 
+	var bodyElem = document.getElementsByTagName('body')[0];
 	var crsCont = document.querySelector('#courses .container');
 	var crsBox = document.querySelector('.courses-block');
 	var crsArr = [
@@ -255,6 +271,36 @@ var Courses = (function () {
 		viewButton.innerText = 'view all courses';
 	}
 
+	function showOrHideCourses() {
+		if (!viewAll) {
+			renderItems(crsItemsNum, crsArr.length);
+			viewAll = true;
+			viewButton.innerText = 'only top courses';
+		} else {
+			while (crsBox.childElementCount > crsItemsNum) {
+				crsBox.removeChild(crsBox.children[crsBox.childElementCount - 1]);
+			}
+			viewAll = false;
+			viewButton.innerText = 'view all courses';
+		}
+	}
+
+	function dispatchOpenCrsPopup(target) {
+		var parentElem = target.parentNode;
+		var onViewAllCourses;
+		var crsId;
+
+		while (parentElem !== bodyElem && parentElem.className.indexOf('courses-block-item') < 0) {
+			parentElem = parentElem.parentNode;
+		}
+
+		crsId = parentElem === bodyElem ? null : parentElem.id.split('_')[1];
+
+		onViewAllCourses = new CustomEvent('onViewAllCourses', { 'detail' : crsId } );
+		document.dispatchEvent(onViewAllCourses);
+
+	}
+
 	return {
 		init: function () {
 			renderItems(0, crsItemsNum);
@@ -265,24 +311,46 @@ var Courses = (function () {
 
 			crsCont.onclick = function (event) {
 				var target = event.target;
-				var targetClass = event.target.className;
+				var targetClass = target.className;
 				if (targetClass.indexOf('button-show') >= 0) {
-					if (!viewAll) {
-						renderItems(crsItemsNum, crsArr.length);
-						viewAll = true;
-						viewButton.innerText = 'only top courses';
-					} else {
-						while (crsBox.childElementCount > crsItemsNum) {
-							crsBox.removeChild(crsBox.children[crsBox.childElementCount - 1]);
-						}
-						viewAll = false;
-						viewButton.innerText = 'view all courses';
-					}
+					showOrHideCourses();
 				} else if (targetClass.indexOf('read') >= 0) {
-					var viewAllCourses = new CustomEvent('onViewAllCourses', { 'detail' : '!!!' } );
-					document.dispatchEvent(viewAllCourses);
+					dispatchOpenCrsPopup(target);
 				}
 			};
+		}
+	}
+})();
+
+var CrsPopup = (function () {
+	var body = document.getElementsByTagName('body')[0];
+	var popupBox = document.createElement('div');
+
+	function renderPopup(crsId) {
+		popupBox.innerHTML = '<div class="container"><div class="popup-closeButton">X</div><div class="content">' + crsId + '</div></div>';
+		popupBox.className = 'allCoursesBox show';
+		body.appendChild(popupBox);
+		popupBox.onwheel = function (event) {
+			event.preventDefault();
+		}
+	}
+
+	function closePopup() {
+		popupBox.className = 'allCoursesBox hide';
+	}
+
+	return {
+		init: function (crsId) {
+			renderPopup(crsId);
+
+			popupBox.onclick = function (event) {
+				var target = event.target;
+				var targetClass = target.className;
+				if (targetClass.indexOf('popup-closeButton') >= 0) {
+					closePopup();
+				}
+			};
+
 		}
 	}
 })();
