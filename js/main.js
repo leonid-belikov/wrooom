@@ -36,7 +36,7 @@ var Home = (function () {
 				var target = event.target;
 				var targetClass = target.className;
 				var onViewAllCourses;
-				var crsId = null;
+				var crsId = 0;
 
 				if (targetClass.indexOf('read') >= 0) {
 					onViewAllCourses = new CustomEvent('onViewAllCourses', { 'detail' : crsId } );
@@ -209,36 +209,42 @@ var Courses = (function () {
 			labelSrc: '/img/course1-label.png',
 			header: 'driving course I',
 			text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.',
+			fullDesc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit consequuntur cumque et facilis repudiandae saepe sed sequi veniam vero atque consequuntur dolores earum id iure laboriosam minus nemo, nisi nostrum odio quidem, quis tempora vel. Aliquid debitis dolore, eaque earum eveniet facere fugiat molestias, neque nisi obcaecati odio sed sequi sit, totam vero. Dolore dolorum ea iure magnam mollitia nulla rem, reprehenderit tempore velit voluptate voluptatem voluptates voluptatibus voluptatum aliquam aperiam aut blanditiis consectetur cupiditate dolor eius exercitationem explicabo facilis fugiat fugit, impedit, ipsam magnam nesciunt non officiis quaerat quidem reprehenderit rerum saepe sint tempora vitae voluptatum',
 			cost: 200
 		},
 		{
 			labelSrc: '/img/course2-label.png',
 			header: 'driving course II',
 			text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis cupiditate impedit quae. Ab, aspernatur.',
+			fullDesc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit consequuntur cumque et facilis repudiandae saepe sed sequi veniam vero atque consequuntur dolores earum id iure laboriosam minus nemo, nisi nostrum odio quidem, quis tempora vel aliquid debitis dolore, eaque earum eveniet facere fugiat molestias, neque nisi obcaecati odio sed sequi sit, totam vero. Dolore dolorum ea iure magnam mollitia nulla rem, reprehenderit tempore velit. Voluptate voluptatem voluptates voluptatibus voluptatum aliquam aperiam aut blanditiis consectetur cupiditate dolor eius exercitationem explicabo facilis fugiat fugit, impedit, ipsam magnam nesciunt non officiis quaerat quidem reprehenderit rerum saepe sint tempora vitae voluptatum',
 			cost: 300
 		},
 		{
 			labelSrc: '/img/course3-label.png',
 			header: 'driving course III',
 			text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eligendi error est illo perspiciatis.',
+			fullDesc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit consequuntur cumque. Et facilis repudiandae saepe sed sequi veniam vero atque consequuntur dolores earum id iure laboriosam minus nemo, nisi nostrum odio quidem, quis tempora vel. Aliquid debitis dolore, eaque earum eveniet facere fugiat molestias, neque nisi obcaecati odio sed sequi sit, totam vero. Dolore dolorum ea iure magnam mollitia nulla rem, reprehenderit tempore velit voluptate voluptatem voluptates voluptatibus voluptatum aliquam aperiam aut blanditiis consectetur cupiditate dolor eius exercitationem explicabo facilis fugiat fugit, impedit',
 			cost: 400
 		},
 		{
 			labelSrc: '/img/course4-label.png',
 			header: 'driving course IV',
 			text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.',
+			fullDesc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit consequuntur cumque et facilis repudiandae saepe sed sequi veniam vero atque consequuntur dolores earum id iure laboriosam minus nemo, nisi nostrum odio quidem, quis tempora vel aliquid debitis dolore, eaque earum eveniet facere fugiat molestias, neque nisi obcaecati odio sed sequi sit, totam vero. Dolore dolorum ea iure magnam mollitia nulla rem, reprehenderit tempore velit voluptate voluptatem voluptates voluptatibus voluptatum aliquam aperiam aut blanditiis consectetur cupiditate dolor eius exercitationem explicabo facilis fugiat fugit, impedit, ipsam magnam nesciunt non officiis quaerat quidem reprehenderit rerum saepe sint tempora vitae voluptatum',
 			cost: 1200
 		},
 		{
 			labelSrc: '/img/course5-label.png',
 			header: 'driving course V',
 			text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis cupiditate impedit quae. Ab, aspernatur.',
+			fullDesc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit consequuntur cumque et facilis repudiandae saepe sed sequi veniam vero atque consequuntur dolores earum id iure laboriosam minus nemo, nisi nostrum odio quidem. Quis tempora vel aliquid debitis dolore, eaque earum eveniet facere fugiat molestias, neque nisi obcaecati odio sed sequi sit, totam vero dolore dolorum ea iure magnam mollitia nulla rem. Reprehenderit tempore velit voluptate voluptatem voluptates voluptatibus voluptatum aliquam aperiam aut blanditiis consectetur cupiditate dolor eius exercitationem explicabo facilis fugiat fugit, impedit, ipsam magnam nesciunt non officiis quaerat quidem reprehenderit rerum saepe sint tempora vitae voluptatum',
 			cost: 1300
 		},
 		{
 			labelSrc: '/img/course6-label.png',
 			header: 'driving course VI',
 			text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eligendi error est illo perspiciatis.',
+			fullDesc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit consequuntur cumque et facilis repudiandae saepe sed sequi veniam vero atque consequuntur dolores earum id iure laboriosam minus nemo. Nisi nostrum odio quidem, quis tempora vel aliquid debitis dolore, eaque earum eveniet facere fugiat molestias, neque nisi obcaecati odio sed sequi sit, totam vero dolore dolorum ea iure magnam mollitia nulla rem, reprehenderit tempore velit voluptate voluptatem. Voluptates voluptatibus voluptatum aliquam aperiam aut blanditiis consectetur cupiditate dolor eius exercitationem explicabo facilis fugiat fugit, impedit, ipsam magnam nesciunt non officiis quaerat quidem reprehenderit rerum saepe sint tempora vitae voluptatum',
 			cost: 1400
 		}
 	];
@@ -318,18 +324,57 @@ var Courses = (function () {
 					dispatchOpenCrsPopup(target);
 				}
 			};
+		},
+		getCrsArr: function () {
+			return crsArr;
 		}
 	}
 })();
 
 var CrsPopup = (function () {
 	var body = document.getElementsByTagName('body')[0];
-	var popupBox = document.createElement('div');
+	var popupBox = document.querySelector('.allCoursesBox');
+	var crsArr = Courses.getCrsArr();
+	var closeBtnHtml;
+	popupBox.innerHTML = '<div class="container">\n' +
+		'      <div class="popup-closeButton"></div>\n' +
+		'         <div class="row crsLabel">\n' +
+		'            <div class="crsImg current"></div>\n' +
+		'         </div>\n' +
+		'         <div class="row crsDesc">\n' +
+		'            <div class="col-4 ">\n' +
+		'               <h2></h2>\n' +
+		'               <div class="amount"></div>\n' +
+		'               <div class="button-send">send request</div>\n' +
+		'            </div>\n' +
+		'            <div class="col fullDesc"></div>\n' +
+		'         </div>\n' +
+		'      </div>';
+	closeBtnHtml = document.querySelector('.popup-closeButton');
+	closeBtnHtml.innerText = 'X';
 
 	function renderPopup(crsId) {
-		popupBox.innerHTML = '<div class="container"><div class="popup-closeButton">X</div><div class="content">' + crsId + '</div></div>';
+		var crsItem = crsArr[crsId];
+		var imgLabel = document.querySelector('.crsImg.current');
+		var h2 = document.querySelector('.allCoursesBox h2');
+		var amountBox = document.querySelector('.amount');
+		var fullDescBox = document.querySelector('.fullDesc');
+		var fullDescParts = crsItem.fullDesc.split('. ');
+		var innerFullDesc = '';
+
+		imgLabel.style.backgroundImage = 'url(' + crsItem.labelSrc + ')';
+		h2.innerText = crsItem.header;
+		amountBox.innerText = '$ ' + crsItem.cost;
+		for (var i = 0; i < fullDescParts.length; i++) {
+			innerFullDesc += '<p>' + fullDescParts[i] + '.</p>';
+		}
+		fullDescBox.innerHTML = innerFullDesc;
+
 		popupBox.className = 'allCoursesBox show';
-		body.appendChild(popupBox);
+		setTimeout(function () {
+			popupBox.style.opacity = 1;
+		},50);
+
 		popupBox.onwheel = function (event) {
 			event.preventDefault();
 		}
@@ -337,6 +382,7 @@ var CrsPopup = (function () {
 
 	function closePopup() {
 		popupBox.className = 'allCoursesBox hide';
+		popupBox.style.opacity = 0;
 	}
 
 	return {
