@@ -305,6 +305,9 @@ header {
                 background-color: #103B99;
                 color: #FFF; }
 
+.static {
+  transition: 1s; }
+
 .allCoursesBox {
   position: fixed;
   top: 0;
@@ -314,11 +317,9 @@ header {
   background: rgba(37, 37, 37, 0.7);
   z-index: 9999;
   transition: 1s; }
-  .allCoursesBox.show {
-    opacity: 0; }
-    .allCoursesBox.show + .static {
-      filter: blur(5px) contrast(75%);
-      margin-top: -75px; }
+  .allCoursesBox.show + .static {
+    filter: blur(5px) contrast(75%);
+    margin-top: -75px; }
   .allCoursesBox.hide {
     display: none; }
   .allCoursesBox .container {
@@ -327,63 +328,80 @@ header {
     transition: 1s; }
     .allCoursesBox .container .popup-closeButton {
       position: absolute;
-      top: 10%;
+      top: 7%;
       right: 0;
       width: 60px;
       height: 60px;
       text-align: center;
       line-height: 58px;
-      color: #FFF;
-      border: 1px solid #FFF;
+      color: #c3c3c3;
+      border: 1px solid #c3c3c3;
       border-radius: 50%;
       font-size: 24px;
       cursor: pointer; }
       .allCoursesBox .container .popup-closeButton:hover {
         background: #FFF;
-        color: rgba(0, 0, 0, 0.7); }
+        color: rgba(0, 0, 0, 0.7);
+        border-color: #FFF; }
     .allCoursesBox .container .crsLabel {
       position: relative; }
       .allCoursesBox .container .crsLabel .crsImg {
         background-size: cover;
         background-repeat: no-repeat;
-        background-position-y: center; }
+        background-position-y: center;
+        height: 250px;
+        position: absolute;
+        width: 40%;
+        top: 90px;
+        left: 30%;
+        transition: 500ms; }
         .allCoursesBox .container .crsLabel .crsImg.current {
-          height: 250px;
-          position: absolute;
-          width: 40%;
-          top: 90px;
-          left: 30%; }
+          box-shadow: 0 0 22px 4px #191919;
+          z-index: 99; }
+        .allCoursesBox .container .crsLabel .crsImg.prev {
+          box-shadow: 9px 9px 20px 0 #191919;
+          transform: scale(0.6) translateX(-133%) rotateZ(3deg);
+          z-index: 9;
+          cursor: pointer; }
+        .allCoursesBox .container .crsLabel .crsImg.next {
+          box-shadow: 9px 9px 20px 0 #191919;
+          transform: scale(0.6) translateX(133%) rotateZ(-3deg);
+          z-index: 9;
+          cursor: pointer; }
     .allCoursesBox .container .crsDesc {
       color: #c3c3c3;
       font-size: 16px;
-      margin-top: 210px;
+      margin-top: 200px;
       background: rgba(28, 37, 47, 0.7);
-      padding: 180px 40px 40px 40px;
+      padding: 130px 40px 40px 40px;
       height: 470px;
-      box-shadow: 35px 35px 60px 0 #1b1b1b; }
-      .allCoursesBox .container .crsDesc h2 {
-        text-align: right;
-        font-weight: normal;
-        margin-top: -4px; }
-        .allCoursesBox .container .crsDesc h2::after {
-          background: #EBEBF0;
-          margin-right: 0; }
-      .allCoursesBox .container .crsDesc .amount {
-        font-size: 36px;
-        text-align: right;
-        padding: 30px 0; }
-      .allCoursesBox .container .crsDesc .button-send {
-        text-transform: uppercase;
-        color: #000;
-        padding: 20px;
-        font-size: 24px;
-        text-align: center;
-        border: 1px solid;
-        border-radius: 36px;
-        background: rgba(195, 195, 195, 0.1); }
-      .allCoursesBox .container .crsDesc .fullDesc {
-        padding-left: 60px; }
-        .allCoursesBox .container .crsDesc .fullDesc p {
-          margin-bottom: 20px;
-          font-weight: 300;
-          line-height: 22px; }
+      box-shadow: 35px 35px 60px 0 #1b1b1b;
+      border-top: 50px solid #182748; }
+      .allCoursesBox .container .crsDesc .crsDescContent {
+        transition: 1s; }
+        .allCoursesBox .container .crsDesc .crsDescContent h2 {
+          text-align: right;
+          font-weight: normal;
+          margin-top: -4px; }
+          .allCoursesBox .container .crsDesc .crsDescContent h2::after {
+            background: #EBEBF0;
+            margin-right: 0; }
+        .allCoursesBox .container .crsDesc .crsDescContent .amount {
+          font-size: 36px;
+          text-align: right;
+          padding: 30px 0; }
+        .allCoursesBox .container .crsDesc .crsDescContent .button-send {
+          text-transform: uppercase;
+          color: #000;
+          padding: 20px;
+          font-size: 24px;
+          text-align: center;
+          border: 1px solid;
+          border-radius: 36px;
+          background: rgba(24, 39, 72, 0.5); }
+        .allCoursesBox .container .crsDesc .crsDescContent .fullDesc {
+          padding-left: 60px; }
+          .allCoursesBox .container .crsDesc .crsDescContent .fullDesc p {
+            margin-bottom: 20px;
+            font-weight: 300;
+            line-height: 22px; }

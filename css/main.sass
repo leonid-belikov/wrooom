@@ -357,6 +357,8 @@ $card-border-radius: 5px
 //courses popup styles
 
 $bg-popup: rgba(0, 0, 0, 0.7)
+.static
+  transition: 1s
 
 .allCoursesBox
   position: fixed
@@ -368,7 +370,6 @@ $bg-popup: rgba(0, 0, 0, 0.7)
   z-index: 9999
   transition: 1s
   &.show
-    opacity: 0
     + .static
       filter: blur(5px) contrast(75%)
       margin-top: -75px
@@ -380,63 +381,80 @@ $bg-popup: rgba(0, 0, 0, 0.7)
     transition: 1s
     .popup-closeButton
       position: absolute
-      top: 10%
+      top: 7%
       right: 0
       width: 60px
       height: 60px
       text-align: center
       line-height: 58px
-      color: $bg-text-extra-light
-      border: 1px solid $bg-text-extra-light
+      color: #c3c3c3
+      border: 1px solid #c3c3c3
       border-radius: 50%
       font-size: 24px
       cursor: pointer
       &:hover
         background: $bg-text-extra-light
         color: $bg-popup
+        border-color: $bg-text-extra-light
     .crsLabel
       position: relative
       .crsImg
         background-size: cover
         background-repeat: no-repeat
         background-position-y: center
+        height: 250px
+        position: absolute
+        width: 40%
+        top: 90px
+        left: 30%
+        transition: 500ms
         &.current
-          height: 250px
-          position: absolute
-          width: 40%
-          top: 90px
-          left: 30%
+          box-shadow: 0 0 22px 4px #191919
+          z-index: 99
+        &.prev
+          box-shadow: 9px 9px 20px 0 #191919
+          transform: scale(0.6) translateX(-133%) rotateZ(3deg)
+          z-index: 9
+          cursor: pointer
+        &.next
+          box-shadow: 9px 9px 20px 0 #191919
+          transform: scale(0.6) translateX(133%) rotateZ(-3deg)
+          z-index: 9
+          cursor: pointer
     .crsDesc
       color: #c3c3c3
       font-size: $text-normal
-      margin-top: 210px
+      margin-top: 200px
       background: rgba(28, 37, 47, 0.7)
-      padding: 180px 40px 40px 40px
+      padding: 130px 40px 40px 40px
       height: 470px
       box-shadow: 35px 35px 60px 0 #1b1b1b
-      h2
-        text-align: right
-        font-weight: normal
-        margin-top: -4px
-        &::after
-          background: $text-light
-          margin-right: 0
-      .amount
-        font-size: $text-cost
-        text-align: right
-        padding: 30px 0
-      .button-send
-        text-transform: uppercase
-        color: #000
-        padding: 20px
-        font-size: 24px
-        text-align: center
-        border: 1px solid
-        border-radius: 36px
-        background: rgba(195, 195, 195, 0.1)
-      .fullDesc
-        padding-left: 60px
-        p
-          margin-bottom: 20px
-          font-weight: 300
-          line-height: 22px
+      border-top: 50px solid $bg-text-dark
+      .crsDescContent
+        transition: 1s
+        h2
+          text-align: right
+          font-weight: normal
+          margin-top: -4px
+          &::after
+            background: $text-light
+            margin-right: 0
+        .amount
+          font-size: $text-cost
+          text-align: right
+          padding: 30px 0
+        .button-send
+          text-transform: uppercase
+          color: #000
+          padding: 20px
+          font-size: 24px
+          text-align: center
+          border: 1px solid
+          border-radius: 36px
+          background: rgba(24, 39, 72, 0.5)
+        .fullDesc
+          padding-left: 60px
+          p
+            margin-bottom: 20px
+            font-weight: 300
+            line-height: 22px
