@@ -331,8 +331,9 @@ var Courses = (function () {
 })();
 
 var CrsPopup = (function () {
-	var body = document.getElementsByTagName('body')[0];
-	var popupBox = document.querySelector('.allCoursesBox');
+	var header = 	document.querySelector('header');
+	var popupBox =	document.querySelector('.allCoursesBox');
+	var staticBox = document.querySelector('.static');
 	var crsArr = Courses.getCrsArr();
 	var currentCrsId;
 
@@ -373,10 +374,16 @@ var CrsPopup = (function () {
 	}
 
 	function renderPopup() {
-		popupBox.className = 'allCoursesBox show';
+		var popupCntr = document.querySelector('.allCoursesBox .container');
+		popupBox.style.display = 'block';
+		staticBox.style.filter = 'blur(5px)';
+		header.style.opacity = '0';
+		popupCntr.style.top = '-900px';
 
 		setTimeout(function () {
-			popupBox.style.opacity = 1;
+			popupBox.style.opacity = '1';
+			popupCntr.style.opacity = '1';
+			popupCntr.style.top = '0';
 		},50);
 
 		popupBox.onwheel = function (event) {
@@ -385,8 +392,10 @@ var CrsPopup = (function () {
 	}
 
 	function hidePopup() {
-		popupBox.className = 'allCoursesBox hide';
-		popupBox.style.opacity = 0;
+		popupBox.style.opacity = '0';
+		popupBox.style.display = 'none';
+		header.style.opacity = '1';
+		staticBox.style.filter = 'none';
 	}
 
 	function getPrevId(Id) {
@@ -398,17 +407,17 @@ var CrsPopup = (function () {
 	}
 
 	function changeImgForward(Id) {
-		var imgLabelRow = document.querySelector('.crsLabel');
-		var imgLabel = document.querySelector('.crsImg.current');
-		var imgPrevLabel = document.querySelector('.crsImg.prev');
-		var imgNextLabel = document.querySelector('.crsImg.next');
-		var imgNextNextLabel = document.createElement('div');
+		var imgLabelRow =			document.querySelector('.crsLabel');
+		var imgLabel =				document.querySelector('.crsImg.current');
+		var imgPrevLabel =		document.querySelector('.crsImg.prev');
+		var imgNextLabel =		document.querySelector('.crsImg.next');
+		var imgNextNextLabel =	document.createElement('div');
 
 		imgLabel.className = 'crsImg prev';
 		imgPrevLabel.style.opacity = '0';
 		setTimeout(function () {
 			imgLabelRow.removeChild(imgPrevLabel);
-		}, 50);
+		}, 300);
 		imgNextLabel.className = 'crsImg current';
 		imgNextNextLabel.style.opacity = '0';
 		imgNextNextLabel.style.backgroundImage = 'url(' + crsArr[getNextId(getNextId(Id))].labelSrc + ')';
@@ -421,17 +430,17 @@ var CrsPopup = (function () {
 	}
 
 	function changeImgBackward(Id) {
-		var imgLabelRow = document.querySelector('.crsLabel');
-		var imgLabel = document.querySelector('.crsImg.current');
-		var imgPrevLabel = document.querySelector('.crsImg.prev');
-		var imgNextLabel = document.querySelector('.crsImg.next');
-		var imgPrevPrevLabel = document.createElement('div');
+		var imgLabelRow =			document.querySelector('.crsLabel');
+		var imgLabel =				document.querySelector('.crsImg.current');
+		var imgPrevLabel =		document.querySelector('.crsImg.prev');
+		var imgNextLabel =		document.querySelector('.crsImg.next');
+		var imgPrevPrevLabel =	document.createElement('div');
 
 		imgLabel.className = 'crsImg next';
 		imgNextLabel.style.opacity = '0';
 		setTimeout(function () {
 			imgLabelRow.removeChild(imgNextLabel);
-		}, 50);
+		}, 300);
 		imgPrevLabel.className = 'crsImg current';
 		imgPrevPrevLabel.style.backgroundImage = 'url(' + crsArr[getPrevId(getPrevId(Id))].labelSrc + ')';
 		imgPrevPrevLabel.className = 'crsImg prev';
@@ -446,8 +455,8 @@ var CrsPopup = (function () {
 	return {
 		init: function (crsId) {
 			currentCrsId = crsId;
-			addPopupContent(crsId);
-			renderPopup(crsId);
+			addPopupContent(currentCrsId);
+			renderPopup(currentCrsId);
 
 			popupBox.onclick = function (event) {
 				var target = event.target;
