@@ -480,6 +480,12 @@ var CrsPopup = (function () {
 	}
 })();
 
+var Indicators = (function () {
+
+
+
+})();
+
 var Footer = (function () {
 	return {
 		init: function () {

@@ -41,7 +41,7 @@ h2
     width: 70px
     margin: 23px auto 0
 
-.footer
+footer
   height: 100vh
 
 
@@ -355,6 +355,7 @@ $card-border-radius: 5px
                 background-color: $bg-text-accent
                 color: $bg-text-extra-light
 
+
 //courses popup styles
 
 $bg-popup: rgba(0, 0, 0, 0.7)
@@ -448,18 +449,44 @@ $bg-popup: rgba(0, 0, 0, 0.7)
           padding: 20px 0
           font-size: 24px
           text-align: center
-          border: 5px solid #ffffff5c
+          border: 5px solid rgba(255, 255, 255, 0.3)
           border-radius: 50px
-          background: rgba(255, 255, 255, 0.28)
+          background: rgba(255, 255, 255, 0.3)
           width: 270px
           position: absolute
-          left: 90px
+          left: 80px
           bottom: 10px
           height: 80px
-          box-shadow: 39px 19px 40px -5px #080808
+          box-shadow: 39px 19px 40px -5px #191919
         .fullDesc
           padding-left: 50px
           p
             margin-bottom: 20px
             font-weight: 300
             line-height: 22px
+
+
+//indicators section styles
+
+.indicators
+  height: 330px
+  background: -300px -780px url('/img/indc-bg.png') no-repeat
+  padding: 105px 0
+  .indcItem
+    color: $bg-text-light
+    h3
+      font-size: 24px
+      text-align: center
+      text-transform: uppercase
+      font-weight: 400
+      &:after
+        background-color: $bg-text-light
+        content: ''
+        display: block
+        height: 2px
+        width: 70px
+        margin: 23px auto
+    .indcNum
+      text-align: center
+      font-size: 36px
+      font-weight: bold

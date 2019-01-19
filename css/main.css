@@ -15,7 +15,7 @@ h2 {
     width: 70px;
     margin: 23px auto 0; }
 
-.footer {
+footer {
   height: 100vh; }
 
 header {
@@ -395,18 +395,41 @@ header {
           padding: 20px 0;
           font-size: 24px;
           text-align: center;
-          border: 5px solid #ffffff5c;
+          border: 5px solid rgba(255, 255, 255, 0.3);
           border-radius: 50px;
-          background: rgba(255, 255, 255, 0.28);
+          background: rgba(255, 255, 255, 0.3);
           width: 270px;
           position: absolute;
-          left: 90px;
+          left: 80px;
           bottom: 10px;
           height: 80px;
-          box-shadow: 39px 19px 40px -5px #080808; }
+          box-shadow: 39px 19px 40px -5px #191919; }
         .allCoursesBox .container .crsDesc .crsDescContent .fullDesc {
           padding-left: 50px; }
           .allCoursesBox .container .crsDesc .crsDescContent .fullDesc p {
             margin-bottom: 20px;
             font-weight: 300;
             line-height: 22px; }
+
+.indicators {
+  height: 330px;
+  background: -300px -780px url("/img/indc-bg.png") no-repeat;
+  padding: 105px 0; }
+  .indicators .indcItem {
+    color: #F0F0FD; }
+    .indicators .indcItem h3 {
+      font-size: 24px;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 400; }
+      .indicators .indcItem h3:after {
+        background-color: #F0F0FD;
+        content: "";
+        display: block;
+        height: 2px;
+        width: 70px;
+        margin: 23px auto; }
+    .indicators .indcItem .indcNum {
+      text-align: center;
+      font-size: 36px;
+      font-weight: bold; }
