@@ -43,6 +43,10 @@ h2
 
 footer
   height: 100vh
+  background: #ccc
+  text-align: center
+  font-size: 30px
+  color: #888
 
 
 //header styles
@@ -210,7 +214,7 @@ header
     background-size: cover
     height: 150%
     position: absolute
-    bottom: 0
+    bottom: 150px
     left: 0
     right: 0
     z-index: -1
@@ -470,8 +474,16 @@ $bg-popup: rgba(0, 0, 0, 0.7)
 
 .indicators
   height: 330px
-  background: -300px -780px url('/img/indc-bg.png') no-repeat
   padding: 105px 0
+  position: relative
+  &-bg
+    background: 0 -500px url('/img/indc-bg.png') no-repeat
+    background-size: cover
+    height: 150%
+    position: absolute
+    left: 0
+    right: 0
+    z-index: -1
   .indcItem
     color: $bg-text-light
     h3

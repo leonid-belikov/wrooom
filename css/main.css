@@ -16,7 +16,11 @@ h2 {
     margin: 23px auto 0; }
 
 footer {
-  height: 100vh; }
+  height: 100vh;
+  background: #ccc;
+  text-align: center;
+  font-size: 30px;
+  color: #888; }
 
 header {
   background-color: #182748;
@@ -172,7 +176,7 @@ header {
     background-size: cover;
     height: 150%;
     position: absolute;
-    bottom: 0;
+    bottom: 150px;
     left: 0;
     right: 0;
     z-index: -1; }
@@ -413,8 +417,16 @@ header {
 
 .indicators {
   height: 330px;
-  background: -300px -780px url("/img/indc-bg.png") no-repeat;
-  padding: 105px 0; }
+  padding: 105px 0;
+  position: relative; }
+  .indicators-bg {
+    background: 0 -500px url("/img/indc-bg.png") no-repeat;
+    background-size: cover;
+    height: 150%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: -1; }
   .indicators .indcItem {
     color: #F0F0FD; }
     .indicators .indcItem h3 {

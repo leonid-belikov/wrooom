@@ -8,6 +8,7 @@ var App = (function () {
 			Advantages.init();
 			Reviews.init();
 			Courses.init();
+			Indicators.init();
 			Footer.init();
 
 			document.addEventListener('onViewAllCourses', function (event) {
@@ -188,16 +189,13 @@ var Reviews = (function () {
 			};
 
 			window.addEventListener('scroll', function () {
-				var parallaxBox = document.querySelector('.reviews-bg');
-				var yPos = window.pageYOffset;
-				if (yPos >= 660) {
-					parallaxBox.style.transform = 'translateY(' + (yPos-1100)/3 + 'px)';
-				}
+				var parallaxBg = document.querySelector('.reviews-bg');
+				var parallaxBox = document.querySelector('.reviews');
+				fLib.parallax(parallaxBox, parallaxBg, 150, 3);
 			});
 		}
 	}
 })();
-
 
 var Courses = (function () {
 
@@ -360,9 +358,9 @@ var CrsPopup = (function () {
 
 	function putPopupImages(crsId) {
 		var crsItem = crsArr[crsId];
-		var crsPrevId = getPrevId(crsId);
+		var crsPrevId = fLib.getPrev(crsId, crsArr.length);
 		var crsPrevItem = crsArr[crsPrevId];
-		var crsNextId = getNextId(crsId);
+		var crsNextId = fLib.getNext(crsId, crsArr.length);
 		var crsNextItem = crsArr[crsNextId];
 		var imgLabel = document.querySelector('.crsImg.current');
 		var imgPrevLabel = document.querySelector('.crsImg.prev');
@@ -398,14 +396,6 @@ var CrsPopup = (function () {
 		staticBox.style.filter = 'none';
 	}
 
-	function getPrevId(Id) {
-		return Id === 0 ? crsArr.length - 1 : --Id;
-	}
-
-	function getNextId(Id) {
-		return Id === crsArr.length - 1 ? 0 : ++Id;
-	}
-
 	function changeImgForward(Id) {
 		var imgLabelRow =			document.querySelector('.crsLabel');
 		var imgLabel =				document.querySelector('.crsImg.current');
@@ -420,7 +410,7 @@ var CrsPopup = (function () {
 		}, 300);
 		imgNextLabel.className = 'crsImg current';
 		imgNextNextLabel.style.opacity = '0';
-		imgNextNextLabel.style.backgroundImage = 'url(' + crsArr[getNextId(getNextId(Id))].labelSrc + ')';
+		imgNextNextLabel.style.backgroundImage = 'url(' + crsArr[fLib.getNext(fLib.getNext(Id, crsArr.length), crsArr.length)].labelSrc + ')';
 		imgNextNextLabel.className = 'crsImg next';
 		imgLabelRow.appendChild(imgNextNextLabel);
 		setTimeout(function () {
@@ -442,7 +432,7 @@ var CrsPopup = (function () {
 			imgLabelRow.removeChild(imgNextLabel);
 		}, 300);
 		imgPrevLabel.className = 'crsImg current';
-		imgPrevPrevLabel.style.backgroundImage = 'url(' + crsArr[getPrevId(getPrevId(Id))].labelSrc + ')';
+		imgPrevPrevLabel.style.backgroundImage = 'url(' + crsArr[fLib.getPrev(fLib.getPrev(Id, crsArr.length), crsArr.length)].labelSrc + ')';
 		imgPrevPrevLabel.className = 'crsImg prev';
 		imgPrevPrevLabel.style.opacity = '0';
 		imgLabelRow.appendChild(imgPrevPrevLabel);
@@ -467,10 +457,10 @@ var CrsPopup = (function () {
 				} else if (targetClass.indexOf('crsImg') >= 0) {
 					if (targetClass.indexOf('prev') >= 0) {
 						changeImgBackward(currentCrsId);
-						currentCrsId = getPrevId(currentCrsId);
+						currentCrsId = fLib.getPrev(currentCrsId, crsArr.length);
 					} else if (targetClass.indexOf('next') >= 0) {
 						changeImgForward(currentCrsId);
-						currentCrsId = getNextId(currentCrsId);
+						currentCrsId = fLib.getNext(currentCrsId, crsArr.length);
 					}
 					putPopupTextContent(currentCrsId);
 				}
@@ -481,7 +471,82 @@ var CrsPopup = (function () {
 })();
 
 var Indicators = (function () {
+	var indcsBox = document.querySelector('.indcBox');
+	var indicators = [
+		{
+			name: 'graduates',
+			value: 1350
+		},
+		{
+			name: 'teachers',
+			value: 32
+		},
+		{
+			name: 'smthg else',
+			value: 74
+		},
+		{
+			name: 'years on market',
+			value: 13
+		}
+	];
 
+	function viewCounter(i) {
+		var j=0;
+		var step = 2000/indicators[i].value;
+		var indcItem = document.getElementById(indicators[i].name);
+		var counter = setInterval(function () {
+			i === 0 ? j += 3 : ++j;
+			indcItem.innerText = j;
+			if (j === indicators[i].value) {
+				clearInterval(counter);
+			}
+		}, step);
+		console.log(step);
+	}
+
+	function viewCounters() {
+		for (var i=0; i<indicators.length; ++i) {
+			viewCounter(i);
+		}
+	}
+
+	function renderIndcs() {
+		for (var i=0; i<indicators.length; i++) {
+			var h3 = document.createElement('h3');
+			var indcNum = document.createElement('div');
+			var indcItem = document.createElement('div');
+
+			h3.innerText = indicators[i].name;
+			indcNum.className = "indcNum";
+			indcNum.id = indicators[i].name;
+			indcItem.className = "col indcItem";
+			indcItem.appendChild(h3);
+			indcItem.appendChild(indcNum);
+			indcsBox.appendChild(indcItem);
+		}
+	}
+
+
+	return {
+		init: function () {
+
+			var indcsHasShown = false;
+
+			window.addEventListener('scroll', function () {
+				var parallaxBg = document.querySelector('.indicators-bg');
+				var indcsBox = document.querySelector('.indicators');
+				fLib.parallax(indcsBox, parallaxBg, 100, 3);
+				if (!indcsHasShown && indcsBox.getBoundingClientRect().bottom < window.innerHeight) {
+					viewCounters();
+					indcsHasShown = true;
+				}
+			});
+
+			renderIndcs();
+
+		}
+	}
 
 
 })();
@@ -493,6 +558,22 @@ var Footer = (function () {
 		}
 	}
 })();
+
+var fLib =  {
+	parallax: function (prlxBox, prlxBg, shift, slowdown) {
+		var coordTop = prlxBox.getBoundingClientRect().top;
+		if (!!coordTop && coordTop < window.innerHeight) {
+			prlxBg.style.bottom = shift+(coordTop-window.innerHeight)/slowdown + 'px';
+		}
+	},
+	getNext: function (num, length) {
+		return num === length - 1 ? 0 : ++num;
+	},
+	getPrev: function (num, length) {
+		return num === 0? length - 1 : --num;
+	}
+
+};
 
 
 App.init();
