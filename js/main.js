@@ -9,6 +9,7 @@ var App = (function () {
 			Reviews.init();
 			Courses.init();
 			Indicators.init();
+			Instructors.init();
 			Footer.init();
 
 			document.addEventListener('onViewAllCourses', function (event) {
@@ -199,7 +200,7 @@ var Reviews = (function () {
 
 var Courses = (function () {
 
-	var bodyElem = document.getElementsByTagName('body')[0];
+	var bodyElem = document.body;
 	var crsCont = document.querySelector('#courses .container');
 	var crsBox = document.querySelector('.courses-block');
 	var crsArr = [
@@ -254,6 +255,7 @@ var Courses = (function () {
 
 	function renderItems (first, count) {
 		for (var i=first; i<count; i++) {
+			//todo переписать img на div с background-image
 			var img = '<img src="' + crsArr[i].labelSrc + '" alt="">';
 			var hoverBox = '<div class="hover-box read">' + hoverText + '</div>';
 			var h = '<h3>' + crsArr[i].header + '</h3>';
@@ -502,7 +504,6 @@ var Indicators = (function () {
 				clearInterval(counter);
 			}
 		}, step);
-		console.log(step);
 	}
 
 	function viewCounters() {
@@ -533,21 +534,94 @@ var Indicators = (function () {
 
 			var indcsHasShown = false;
 
+			renderIndcs();
+
 			window.addEventListener('scroll', function () {
-				var parallaxBg = document.querySelector('.indicators-bg');
+				var indcsBg = document.querySelector('.indicators-bg');
 				var indcsBox = document.querySelector('.indicators');
-				fLib.parallax(indcsBox, parallaxBg, 100, 3);
-				if (!indcsHasShown && indcsBox.getBoundingClientRect().bottom < window.innerHeight) {
+				fLib.parallax(indcsBox, indcsBg, 100, 3);
+				if (!indcsHasShown && indcsBox.getBoundingClientRect().bottom - indcsBox.offsetHeight/2 < window.innerHeight) {
 					viewCounters();
 					indcsHasShown = true;
 				}
 			});
 
-			renderIndcs();
-
 		}
 	}
 
+
+})();
+
+var Instructors = (function () {
+	var instrBox = document.querySelector('.instructors-block-items');
+	var instrArr = [
+		{
+			avatar: '/img/avatar_1.png',
+			name: 'vasiliy terkin',
+			desc: 'Director',
+			links: {
+				fb: '',
+				tw: '',
+				ig: ''
+			}
+		},
+		{
+			avatar: '/img/avatar_2.png',
+			name: 'leonid belikov',
+			desc: 'Road king',
+			links: {
+				fb: '',
+				tw: '',
+				ig: ''
+			}
+		},
+		{
+			avatar: '/img/avatar_3.png',
+			name: 'arnold krasava',
+			desc: 'Uborschik',
+			links: {
+				fb: '',
+				tw: '',
+				ig: ''
+			}
+		}
+	];
+
+	function renderInstrBox() {
+		for (var i=0; i<instrArr.length; i++) {
+			renderInstrItem(i);
+		}
+	}
+
+	function renderInstrItem(num) {
+		var instrItem = document.createElement('div');
+		var avatar = document.createElement('div');
+		var title = document.createElement('div');
+		var name = document.createElement('div');
+		var desc = document.createElement('div');
+
+		name.className = 'name';
+		name.innerText = instrArr[num].name;
+		desc.className = 'desc';
+		desc.innerText = instrArr[num].desc;
+		title.className = 'title';
+
+		title.appendChild(name);
+		title.appendChild(desc);
+		avatar.className = 'avatar';
+		avatar.style.background = 'center center url(' + instrArr[num].avatar + ')';
+		instrItem.className = 'instructors-block-item';
+		instrItem.appendChild(avatar);
+		instrItem.appendChild(title);
+
+		instrBox.appendChild(instrItem);
+	}
+
+	return {
+		init: function () {
+			renderInstrBox();
+		}
+	}
 
 })();
 
@@ -572,7 +646,6 @@ var fLib =  {
 	getPrev: function (num, length) {
 		return num === 0? length - 1 : --num;
 	}
-
 };
 
 
