@@ -99,8 +99,8 @@ var Reviews = (function () {
 	var reviewBox = document.querySelector('.reviews .content .review');
 	var reviewTextBox = document.querySelector('.reviews .content .text');
 	var reviewAuthorBox = document.querySelector('.reviews .content .author');
-	var leftArrowButton = document.querySelector('.left-arrow');
-	var rightArrowButton = document.querySelector('.right-arrow');
+	var leftArrowButton = document.querySelector('.reviews .left-arrow');
+	var rightArrowButton = document.querySelector('.reviews .right-arrow');
 
 	var reviewsArr = [
 		{
@@ -190,9 +190,9 @@ var Reviews = (function () {
 			};
 
 			window.addEventListener('scroll', function () {
-				var parallaxBg = document.querySelector('.reviews-bg');
-				var parallaxBox = document.querySelector('.reviews');
-				fLib.parallax(parallaxBox, parallaxBg, 150, 3);
+				var reviewsBg = document.querySelector('.reviews-bg');
+				var reviewsBox = document.querySelector('.reviews');
+				fLib.parallax(reviewsBox, reviewsBg, 150, 3);
 			});
 		}
 	}
@@ -253,8 +253,8 @@ var Courses = (function () {
 	var hoverText = 'read more';
 	var viewButton = document.querySelector('.button-show');
 
-	function renderItems (first, count) {
-		for (var i=first; i<count; i++) {
+	function renderItems (first, last) {
+		for (var i=first; i<last; i++) {
 			//todo переписать img на div с background-image
 			var img = '<img src="' + crsArr[i].labelSrc + '" alt="">';
 			var hoverBox = '<div class="hover-box read">' + hoverText + '</div>';
@@ -331,9 +331,9 @@ var Courses = (function () {
 })();
 
 var CrsPopup = (function () {
-	var header = 	document.querySelector('header');
-	var popupBox =	document.querySelector('.allCoursesBox');
-	var staticBox = document.querySelector('.static');
+	var header = 		document.querySelector('header');
+	var popupBox =		document.querySelector('.allCoursesBox');
+	var staticBox =	document.querySelector('.static');
 	var crsArr = Courses.getCrsArr();
 	var currentCrsId;
 
@@ -553,16 +553,28 @@ var Indicators = (function () {
 })();
 
 var Instructors = (function () {
-	var instrBox = document.querySelector('.instructors-block-items');
+	var instrBox =				document.querySelector('.instructors-block-items');
+	var leftArrowButton =	document.querySelector('.instructors .left-arrow');
+	var rightArrowButton =	document.querySelector('.instructors .right-arrow');
+	var socNets = {
+		'fb':
+			{'icon': '/img/fb-icon.png'},
+		'tw':
+			{'icon': '/img/tw-icon.png'},
+		'vk':
+			{'icon': '/img/vk-icon.png'},
+		'ig':
+			{'icon': '/img/ig-icon.png'}
+	};
 	var instrArr = [
 		{
 			avatar: '/img/avatar_1.png',
 			name: 'vasiliy terkin',
 			desc: 'Director',
 			links: {
-				fb: '',
-				tw: '',
-				ig: ''
+				fb: '#',
+				tw: '#',
+				ig: '#'
 			}
 		},
 		{
@@ -570,9 +582,9 @@ var Instructors = (function () {
 			name: 'leonid belikov',
 			desc: 'Road king',
 			links: {
-				fb: '',
-				tw: '',
-				ig: ''
+				fb: '#',
+				vk: '#',
+				tw: '#'
 			}
 		},
 		{
@@ -580,25 +592,31 @@ var Instructors = (function () {
 			name: 'arnold krasava',
 			desc: 'Uborschik',
 			links: {
-				fb: '',
-				tw: '',
-				ig: ''
+				fb: '#',
+				vk: '#',
+				tw: '#',
+				ig: '#'
 			}
 		}
 	];
+	var instrItemsNum = instrArr.length > 3 ? 3 : instrArr.length;
+
 
 	function renderInstrBox() {
-		for (var i=0; i<instrArr.length; i++) {
+		for (var i=0; i<instrItemsNum; i++) {
 			renderInstrItem(i);
 		}
 	}
 
 	function renderInstrItem(num) {
-		var instrItem = document.createElement('div');
-		var avatar = document.createElement('div');
-		var title = document.createElement('div');
-		var name = document.createElement('div');
-		var desc = document.createElement('div');
+		var instrItem =	document.createElement('div');
+		var avatar =		document.createElement('div');
+		var title =			document.createElement('div');
+		var name =			document.createElement('div');
+		var desc =			document.createElement('div');
+		var hasLinks = !!instrArr[num].links;
+		var hoverBox;
+		var socNetBtns = [];
 
 		name.className = 'name';
 		name.innerText = instrArr[num].name;
@@ -611,15 +629,84 @@ var Instructors = (function () {
 		avatar.className = 'avatar';
 		avatar.style.background = 'center center url(' + instrArr[num].avatar + ')';
 		instrItem.className = 'instructors-block-item';
+
+		if (hasLinks) {
+			hoverBox = document.createElement('div');
+			hoverBox.className = 'hover-box';
+			for (var socNet in instrArr[num].links) {
+				if (socNet in socNets) {
+					var socNetBtn = document.createElement('div');
+					socNetBtn.className = 'soc-net';
+					socNetBtn.innerHTML = '<a href="' + instrArr[num].links[socNet] + '"><img src="' + socNets[socNet].icon + '"></a>';
+					hoverBox.appendChild(socNetBtn);
+					socNetBtns.push(socNetBtn);
+				}
+			}
+			avatar.appendChild(hoverBox);
+		}
+
 		instrItem.appendChild(avatar);
 		instrItem.appendChild(title);
 
 		instrBox.appendChild(instrItem);
+
+		instrItem.onmouseover = function () {
+			hoverBox.style.background = 'rgba(0, 0, 0, 0.4)';
+			showHideSocBtns(socNetBtns, false);
+	};
+
+		instrItem.onmouseout = function () {
+			hoverBox.style.background = 'rgba(0, 0, 0, 0)';
+			showHideSocBtns(socNetBtns, true);
+		}
 	}
+
+	function showHideSocBtns(socNetBtns, isShowSocNetBtns) {
+		var i=0;
+		var viewer = setInterval(function () {
+			socNetBtns[i].style.transform = isShowSocNetBtns ? 'scale(0)' : 'scale(1)';
+			i++;
+			if (i === socNetBtns.length) {
+				clearInterval(viewer);
+			}
+		}, 100);
+
+	}
+
+	function activateArrow (arrowElem) {
+		arrowElem.innerHTML = '<img src="img/arrow-blue.png">';
+		arrowElem.style.transform = 'translateZ(10px)';
+		arrowElem.style.filter = 'drop-shadow(0 10px 3px rgba(0,0,0,0.5))';
+	}
+
+	function deactivateArrow (arrowElem) {
+		arrowElem.innerHTML = '<img src="img/arrow-dark-blue.png">';
+		arrowElem.style.transform = 'translateZ(0)';
+		arrowElem.style.filter = 'none';
+	}
+
 
 	return {
 		init: function () {
+
 			renderInstrBox();
+
+			leftArrowButton.onmouseenter = function () {
+				activateArrow(leftArrowButton);
+			};
+
+			leftArrowButton.onmouseleave = function () {
+				deactivateArrow(leftArrowButton);
+			};
+
+			rightArrowButton.onmouseenter = function () {
+				activateArrow(rightArrowButton);
+			};
+
+			rightArrowButton.onmouseleave = function () {
+				deactivateArrow(rightArrowButton);
+			};
+
 		}
 	}
 
