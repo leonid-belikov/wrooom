@@ -553,6 +553,9 @@ var Indicators = (function () {
 })();
 
 var Instructors = (function () {
+/*
+	var instrBlock =			document.querySelector('.instructors-block');
+*/
 	var instrBox =				document.querySelector('.instructors-block-items');
 	var leftArrowButton =	document.querySelector('.instructors .left-arrow');
 	var rightArrowButton =	document.querySelector('.instructors .right-arrow');
@@ -583,7 +586,7 @@ var Instructors = (function () {
 			desc: 'Road king',
 			links: {
 				fb: '#',
-				vk: '#',
+				vk: 'https://vk.com/id130355',
 				tw: '#'
 			}
 		},
@@ -591,6 +594,37 @@ var Instructors = (function () {
 			avatar: '/img/avatar_3.png',
 			name: 'arnold krasava',
 			desc: 'Uborschik',
+			links: {
+				fb: '#',
+				vk: '#',
+				tw: '#',
+				ig: '#'
+			}
+		},
+		{
+			avatar: '/img/avatar_4.png',
+			name: 'Daniel',
+			desc: 'Race driving',
+			links: {
+				fb: '#',
+				tw: '#',
+				ig: '#'
+			}
+		},
+		{
+			avatar: '/img/avatar_5.png',
+			name: 'Emilian',
+			desc: 'Extreme driving',
+			links: {
+				fb: '#',
+				vk: '#',
+				tw: '#'
+			}
+		},
+		{
+			avatar: '/img/avatar_6.png',
+			name: 'Zhaber',
+			desc: 'Dumbass',
 			links: {
 				fb: '#',
 				vk: '#',
@@ -608,7 +642,7 @@ var Instructors = (function () {
 		}
 	}
 
-	function renderInstrItem(num) {
+	function renderInstrItem(num, toStart = false) {
 		var instrItem =	document.createElement('div');
 		var avatar =		document.createElement('div');
 		var title =			document.createElement('div');
@@ -629,6 +663,7 @@ var Instructors = (function () {
 		avatar.className = 'avatar';
 		avatar.style.background = 'center center url(' + instrArr[num].avatar + ')';
 		instrItem.className = 'instructors-block-item';
+		instrItem.id = 'id_' + num;
 
 		if (hasLinks) {
 			hoverBox = document.createElement('div');
@@ -637,7 +672,7 @@ var Instructors = (function () {
 				if (socNet in socNets) {
 					var socNetBtn = document.createElement('div');
 					socNetBtn.className = 'soc-net';
-					socNetBtn.innerHTML = '<a href="' + instrArr[num].links[socNet] + '"><img src="' + socNets[socNet].icon + '"></a>';
+					socNetBtn.innerHTML = '<a href="' + instrArr[num].links[socNet] + '" target="_blank"><img src="' + socNets[socNet].icon + '"></a>';
 					hoverBox.appendChild(socNetBtn);
 					socNetBtns.push(socNetBtn);
 				}
@@ -648,7 +683,11 @@ var Instructors = (function () {
 		instrItem.appendChild(avatar);
 		instrItem.appendChild(title);
 
-		instrBox.appendChild(instrItem);
+		if (toStart) {
+			instrBox.insertBefore(instrItem, instrBox.children[0]);
+		} else {
+			instrBox.appendChild(instrItem);
+		}
 
 		instrItem.onmouseover = function () {
 			hoverBox.style.background = 'rgba(0, 0, 0, 0.4)';
@@ -685,6 +724,32 @@ var Instructors = (function () {
 		arrowElem.style.filter = 'none';
 	}
 
+	function changeInstr (side) {
+		var instrItems = document.getElementsByClassName('instructors-block-item');
+		var firstInstrItem = instrItems[0];
+		var lastInstrItem = instrItems[instrItems.length-1];
+		var firstId = parseInt(instrItems[0].id.split('_')[1]);
+		var lastId = parseInt(instrItems[instrItems.length-1].id.split('_')[1]);
+
+		switch(side) {
+			case 'toLeft':
+				firstInstrItem.style.transform = 'translate(-50%, -150%) scale(0) rotateZ(-180deg)';
+				firstInstrItem.style.opacity = '0';
+				setTimeout(function () {
+					instrBox.removeChild(firstInstrItem);
+					renderInstrItem(fLib.getNext(lastId, instrArr.length));
+				}, 300);
+				break;
+			case 'toRight':
+				lastInstrItem.style.transform = 'translate(50%, -150%) scale(0) rotateZ(180deg)';
+				lastInstrItem.style.opacity = '0';
+				setTimeout(function () {
+					instrBox.removeChild(lastInstrItem);
+					renderInstrItem(fLib.getPrev(firstId, instrArr.length), true);
+				}, 300);
+				break;
+		}
+	}
 
 	return {
 		init: function () {
@@ -705,6 +770,16 @@ var Instructors = (function () {
 
 			rightArrowButton.onmouseleave = function () {
 				deactivateArrow(rightArrowButton);
+			};
+
+			leftArrowButton.onclick = function () {
+				var side = 'toLeft';
+				changeInstr(side);
+			};
+
+			rightArrowButton.onclick = function () {
+				var side = 'toRight';
+				changeInstr(side);
 			};
 
 		}
