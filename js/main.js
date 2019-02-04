@@ -1,3 +1,5 @@
+"use strict";
+
 var App = (function () {
 
 
@@ -10,6 +12,7 @@ var App = (function () {
 			Courses.init();
 			Indicators.init();
 			Instructors.init();
+			Feedback.init();
 			Footer.init();
 
 			document.addEventListener('onViewAllCourses', function (event) {
@@ -261,7 +264,7 @@ var Courses = (function () {
 			var h = '<h3>' + crsArr[i].header + '</h3>';
 			var p = '<p>' + crsArr[i].text + '</p>';
 			var cost = '<div class="cost">$ ' + crsArr[i].cost + '</div>';
-			var btns = '<div class="buttons"><div class="button send">send request</div><div class="button read">read more</div></div>';
+			var btns = '<div class="buttons"><div class="button send">go to order</div><div class="button read">read more</div></div>';
 			var contentBox = '<div class="content">' + h + p + cost + btns + '</div>';
 
 			crsItem = document.createElement('div');
@@ -553,9 +556,6 @@ var Indicators = (function () {
 })();
 
 var Instructors = (function () {
-/*
-	var instrBlock =			document.querySelector('.instructors-block');
-*/
 	var instrBox =				document.querySelector('.instructors-block-items');
 	var leftArrowButton =	document.querySelector('.instructors .left-arrow');
 	var rightArrowButton =	document.querySelector('.instructors .right-arrow');
@@ -785,6 +785,93 @@ var Instructors = (function () {
 		}
 	}
 
+})();
+
+var Feedback = (function () {
+	var courses = Courses.getCrsArr();
+	var feedbackSection =		document.querySelector('.feedback');
+	var courseSelectorBox =		document.querySelector('.course-select');
+	var courseListBox =			document.querySelector('.course-list');
+	var courseListArrowBox =	document.querySelector('.course-select-arrow');
+	var isShowCourseList = false;
+
+	function addCourseList() {
+		for (var i=0; i<courses.length; i++) {
+			addCourseListItem(i);
+		}
+	}
+
+	function addCourseListItem(i) {
+		var courseListItemBox =	document.createElement('li');
+		var itemCostBox =			document.createElement('div');
+		var itemImgBox =			document.createElement('div');
+		var itemImgHoverbox =	document.createElement('div');
+		var itemTitleBox =		document.createElement('div');
+
+		courseListItemBox.className = 'course-list-item';
+		courseListItemBox.id = 'crsId_' + i;
+		itemCostBox.className = 'cost';
+		itemCostBox.innerText = '$' + courses[i].cost;
+		itemImgBox.className = 'img';
+		itemImgBox.style.backgroundImage = "url('" + courses[i].labelSrc + "')";
+		itemImgHoverbox.className = 'hover-box';
+		itemImgHoverbox.innerText = 'read more';
+		itemTitleBox.className = 'title';
+		itemTitleBox.innerText = courses[i].header;
+
+		itemImgBox.appendChild(itemImgHoverbox);
+		courseListItemBox.appendChild(itemCostBox);
+		courseListItemBox.appendChild(itemImgBox);
+		courseListItemBox.appendChild(itemTitleBox);
+
+		courseListBox.appendChild(courseListItemBox);
+	}
+
+	function showCourseList() {
+		courseSelectorBox.style.borderBottomLeftRadius = '0';
+		courseSelectorBox.style.borderBottomRightRadius = '0';
+		courseListBox.style.transform = 'none';
+		courseListBox.style.boxShadow = '0 12px 19px 0 #000';
+		courseListArrowBox.style.transform = 'rotateZ(-180deg)';
+		isShowCourseList = true;
+	}
+
+	function hideCourseList() {
+		courseListBox.style.transform = 'scaleY(0)';
+		courseListBox.style.boxShadow = 'none';
+		courseListArrowBox.style.transform = 'none';
+		setTimeout(function () {
+			courseSelectorBox.style.borderBottomLeftRadius = '5px';
+			courseSelectorBox.style.borderBottomRightRadius = '5px';
+		}, 200);
+		isShowCourseList = false;
+	}
+
+	function setSelectedCourse(i) {
+
+	}
+	
+	return {
+		init: function () {
+			addCourseList();
+
+			feedbackSection.onclick = function (event) {
+				var target = event.target;
+				var targetClass = target.className;
+
+				if (targetClass.indexOf('course-select') >= 0) {
+					isShowCourseList ? hideCourseList() : showCourseList();
+				} else {
+					isShowCourseList ? hideCourseList() : '' ;
+				}
+
+				}
+		},
+
+		setCourse: function (i) {
+			setSelectedCourse(i);
+		}
+	}
 })();
 
 var Footer = (function () {
