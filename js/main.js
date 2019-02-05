@@ -17,6 +17,10 @@ var App = (function () {
 
 			document.addEventListener('onViewAllCourses', function (event) {
 				CrsPopup.init(event.detail);
+			});
+
+			document.addEventListener('onSetCourse', function (event) {
+				Feedback.setCourse(event.detail);
 			})
 		}
 	}
@@ -295,8 +299,17 @@ var Courses = (function () {
 	}
 
 	function dispatchOpenCrsPopup(target) {
+		var onViewAllCourses = new CustomEvent('onViewAllCourses', { 'detail' : getParentId(target) } );
+		document.dispatchEvent(onViewAllCourses);
+	}
+
+	function dispatchSetCourse(target) {
+		var onSetCourse = new CustomEvent('onSetCourse', { 'detail' : getParentId(target) } );
+		document.dispatchEvent(onSetCourse);
+	}
+
+	function getParentId(target) {
 		var parentElem = target.parentNode;
-		var onViewAllCourses;
 		var crsId;
 
 		while (parentElem !== bodyElem && parentElem.className.indexOf('courses-block-item') < 0) {
@@ -305,8 +318,7 @@ var Courses = (function () {
 
 		crsId = parentElem === bodyElem ? null : parseInt(parentElem.id.split('_')[1]);
 
-		onViewAllCourses = new CustomEvent('onViewAllCourses', { 'detail' : crsId } );
-		document.dispatchEvent(onViewAllCourses);
+		return crsId;
 	}
 
 	return {
@@ -324,6 +336,8 @@ var Courses = (function () {
 					showOrHideCourses();
 				} else if (targetClass.indexOf('read') >= 0) {
 					dispatchOpenCrsPopup(target);
+				} else if (targetClass.indexOf('send') >= 0) {
+					dispatchSetCourse(target);
 				}
 			};
 		},
@@ -466,6 +480,8 @@ var CrsPopup = (function () {
 					} else if (targetClass.indexOf('next') >= 0) {
 						changeImgForward(currentCrsId);
 						currentCrsId = fLib.getNext(currentCrsId, crsArr.length);
+					} else if (targetClass.indexOf('button-send') >= 0) {
+						//todo Запустить событие onSetCourse
 					}
 					putPopupTextContent(currentCrsId);
 				}
@@ -790,7 +806,7 @@ var Instructors = (function () {
 var Feedback = (function () {
 	var courses = Courses.getCrsArr();
 	var feedbackSection =		document.querySelector('.feedback');
-	var courseSelectorBox =		document.querySelector('.course-select');
+	var courseSelectBox =		document.querySelector('.course-select');
 	var courseListBox =			document.querySelector('.course-list');
 	var courseListArrowBox =	document.querySelector('.course-select-arrow');
 	var isShowCourseList = false;
@@ -828,8 +844,8 @@ var Feedback = (function () {
 	}
 
 	function showCourseList() {
-		courseSelectorBox.style.borderBottomLeftRadius = '0';
-		courseSelectorBox.style.borderBottomRightRadius = '0';
+		courseSelectBox.style.borderBottomLeftRadius = '0';
+		courseSelectBox.style.borderBottomRightRadius = '0';
 		courseListBox.style.transform = 'none';
 		courseListBox.style.boxShadow = '0 12px 19px 0 #000';
 		courseListArrowBox.style.transform = 'rotateZ(-180deg)';
@@ -841,14 +857,32 @@ var Feedback = (function () {
 		courseListBox.style.boxShadow = 'none';
 		courseListArrowBox.style.transform = 'none';
 		setTimeout(function () {
-			courseSelectorBox.style.borderBottomLeftRadius = '5px';
-			courseSelectorBox.style.borderBottomRightRadius = '5px';
+			courseSelectBox.style.borderBottomLeftRadius = '5px';
+			courseSelectBox.style.borderBottomRightRadius = '5px';
 		}, 200);
 		isShowCourseList = false;
 	}
 
-	function setSelectedCourse(i) {
+	function setCourseFromList(id) {
+		var idSelector = '#' + id;
+		var crsImg = document.querySelector(idSelector + ' .img');
+		var crsCost = document.querySelector(idSelector + ' .cost');
+		crsImg.style.opacity = '0';
+		crsCost.style.opacity = '0';
 
+		setSelectedCourse(id.split('_')[1]);
+
+		setTimeout(function () {
+			hideCourseList();
+			setTimeout(function () {
+				crsImg.style.opacity = '1';
+				crsCost.style.opacity = '1';
+			},350)
+		}, 150);
+	}
+
+	function setSelectedCourse(i) {
+		courseSelectBox.innerText = courses[i].header;
 	}
 	
 	return {
@@ -861,11 +895,16 @@ var Feedback = (function () {
 
 				if (targetClass.indexOf('course-select') >= 0) {
 					isShowCourseList ? hideCourseList() : showCourseList();
+				} else if (
+					targetClass.indexOf('title') >= 0
+					|| targetClass.indexOf('img') >= 0
+					|| targetClass.indexOf('cost') >= 0) {
+					setCourseFromList(target.parentNode.id);
 				} else {
 					isShowCourseList ? hideCourseList() : '' ;
 				}
 
-				}
+			}
 		},
 
 		setCourse: function (i) {
