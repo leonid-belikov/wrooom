@@ -687,7 +687,7 @@ $bg-popup: rgba(0, 0, 0, 0.7)
             .img
               transform: translate(-81px, -43px) scale(4) rotateZ(-5deg)
               box-shadow: 2px 2px 7px 1px #000
-              transition: 650ms
+              transition: transform 650ms 250ms, opacity 150ms
               cursor: pointer
               position: relative
               z-index: 50
@@ -748,6 +748,7 @@ $bg-popup: rgba(0, 0, 0, 0.7)
           .cost
             transform: scale(0)
             position: absolute
+            cursor: pointer
           .title
             overflow: hidden
             padding: 0 9px
