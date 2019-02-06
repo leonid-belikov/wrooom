@@ -207,7 +207,6 @@ var Reviews = (function () {
 
 var Courses = (function () {
 
-	var bodyElem = document.body;
 	var crsCont = document.querySelector('#courses .container');
 	var crsBox = document.querySelector('.courses-block');
 	var crsArr = [
@@ -312,11 +311,11 @@ var Courses = (function () {
 		var parentElem = target.parentNode;
 		var crsId;
 
-		while (parentElem !== bodyElem && parentElem.className.indexOf('courses-block-item') < 0) {
+		while (parentElem !== document.body && parentElem.className.indexOf('courses-block-item') < 0) {
 			parentElem = parentElem.parentNode;
 		}
 
-		crsId = parentElem === bodyElem ? null : parseInt(parentElem.id.split('_')[1]);
+		crsId = parentElem === document.body ? null : parseInt(parentElem.id.split('_')[1]);
 
 		return crsId;
 	}
@@ -361,12 +360,14 @@ var CrsPopup = (function () {
 
 	function putPopupTextContent(crsId) {
 		var crsItem = crsArr[crsId];
-		var h2 =				document.querySelector('.allCoursesBox h2');
-		var amountBox =	document.querySelector('.amount');
-		var fullDescBox =	document.querySelector('.fullDesc');
+		var crsDescContBox =	document.querySelector('.crsDescContent');
+		var h2 =					document.querySelector('.allCoursesBox h2');
+		var amountBox =		document.querySelector('.amount');
+		var fullDescBox =		document.querySelector('.fullDesc');
 		var fullDescParts = crsItem.fullDesc.split('. ');
 		var innerFullDesc = '';
 
+		crsDescContBox.id = 'crsId_' + crsId;
 		h2.innerText = crsItem.header;
 		amountBox.innerText = '$ ' + crsItem.cost;
 		for (var i = 0; i < fullDescParts.length; i++) {
@@ -461,6 +462,24 @@ var CrsPopup = (function () {
 
 	}
 
+	function dispatchSetCourse(target) {
+		var onSetCourse = new CustomEvent('onSetCourse', { 'detail' : getParentId(target) } );
+		document.dispatchEvent(onSetCourse);
+	}
+
+	function getParentId(target) {
+		var parentElem = target.parentNode;
+		var crsId;
+
+		while (parentElem !== document.body && parentElem.className.indexOf('crsDescContent') < 0) {
+			parentElem = parentElem.parentNode;
+		}
+
+		crsId = parentElem === document.body ? null : parseInt(parentElem.id.split('_')[1]);
+
+		return crsId;
+	}
+
 	return {
 		init: function (crsId) {
 			currentCrsId = crsId;
@@ -471,6 +490,8 @@ var CrsPopup = (function () {
 				var target = event.target;
 				var targetClass = target.className;
 
+				console.log(targetClass);
+
 				if (targetClass.indexOf('popup-closeButton') >= 0) {
 					hidePopup();
 				} else if (targetClass.indexOf('crsImg') >= 0) {
@@ -480,10 +501,11 @@ var CrsPopup = (function () {
 					} else if (targetClass.indexOf('next') >= 0) {
 						changeImgForward(currentCrsId);
 						currentCrsId = fLib.getNext(currentCrsId, crsArr.length);
-					} else if (targetClass.indexOf('button-send') >= 0) {
-						//todo Запустить событие onSetCourse
 					}
 					putPopupTextContent(currentCrsId);
+				} else if (targetClass.indexOf('button-send') >= 0) {
+					dispatchSetCourse(target);
+					hidePopup();
 				}
 			};
 
