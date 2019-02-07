@@ -45,10 +45,9 @@ var Home = (function () {
 				var target = event.target;
 				var targetClass = target.className;
 				var onViewAllCourses;
-				var crsId = 0;
 
 				if (targetClass.indexOf('read') >= 0) {
-					onViewAllCourses = new CustomEvent('onViewAllCourses', { 'detail' : crsId } );
+					onViewAllCourses = new CustomEvent('onViewAllCourses', { 'detail' : 0 } );
 					document.dispatchEvent(onViewAllCourses);
 				}
 			}
@@ -297,29 +296,6 @@ var Courses = (function () {
 		}
 	}
 
-	function dispatchOpenCrsPopup(target) {
-		var onViewAllCourses = new CustomEvent('onViewAllCourses', { 'detail' : getParentId(target) } );
-		document.dispatchEvent(onViewAllCourses);
-	}
-
-	function dispatchSetCourse(target) {
-		var onSetCourse = new CustomEvent('onSetCourse', { 'detail' : getParentId(target) } );
-		document.dispatchEvent(onSetCourse);
-	}
-
-	function getParentId(target) {
-		var parentElem = target.parentNode;
-		var crsId;
-
-		while (parentElem !== document.body && parentElem.className.indexOf('courses-block-item') < 0) {
-			parentElem = parentElem.parentNode;
-		}
-
-		crsId = parentElem === document.body ? null : parseInt(parentElem.id.split('_')[1]);
-
-		return crsId;
-	}
-
 	return {
 		init: function () {
 			renderItems(0, crsItemsNum);
@@ -331,12 +307,15 @@ var Courses = (function () {
 			crsCont.onclick = function (event) {
 				var target = event.target;
 				var targetClass = target.className;
+				var parentClass = 'courses-block-item';
+
 				if (targetClass.indexOf('button-show') >= 0) {
 					showOrHideCourses();
 				} else if (targetClass.indexOf('read') >= 0) {
-					dispatchOpenCrsPopup(target);
+					fLib.dispatchOpenCrsPopup(target, parentClass);
 				} else if (targetClass.indexOf('send') >= 0) {
-					dispatchSetCourse(target);
+					fLib.dispatchSetCourse(target, parentClass);
+					Feedback.scrollToFeedback();
 				}
 			};
 		},
@@ -462,24 +441,6 @@ var CrsPopup = (function () {
 
 	}
 
-	function dispatchSetCourse(target) {
-		var onSetCourse = new CustomEvent('onSetCourse', { 'detail' : getParentId(target) } );
-		document.dispatchEvent(onSetCourse);
-	}
-
-	function getParentId(target) {
-		var parentElem = target.parentNode;
-		var crsId;
-
-		while (parentElem !== document.body && parentElem.className.indexOf('crsDescContent') < 0) {
-			parentElem = parentElem.parentNode;
-		}
-
-		crsId = parentElem === document.body ? null : parseInt(parentElem.id.split('_')[1]);
-
-		return crsId;
-	}
-
 	return {
 		init: function (crsId) {
 			currentCrsId = crsId;
@@ -489,8 +450,6 @@ var CrsPopup = (function () {
 			popupBox.onclick = function (event) {
 				var target = event.target;
 				var targetClass = target.className;
-
-				console.log(targetClass);
 
 				if (targetClass.indexOf('popup-closeButton') >= 0) {
 					hidePopup();
@@ -504,8 +463,9 @@ var CrsPopup = (function () {
 					}
 					putPopupTextContent(currentCrsId);
 				} else if (targetClass.indexOf('button-send') >= 0) {
-					dispatchSetCourse(target);
+					fLib.dispatchSetCourse(target, 'crsDescContent');
 					hidePopup();
+					Feedback.scrollToFeedback();
 				}
 			};
 
@@ -906,7 +866,7 @@ var Feedback = (function () {
 	function setSelectedCourse(i) {
 		courseSelectBox.innerText = courses[i].header;
 	}
-	
+
 	return {
 		init: function () {
 			addCourseList();
@@ -920,17 +880,24 @@ var Feedback = (function () {
 				} else if (
 					targetClass.indexOf('title') >= 0
 					|| targetClass.indexOf('img') >= 0
-					|| targetClass.indexOf('cost') >= 0) {
+					|| targetClass.indexOf('cost') >= 0)
+					{
 					setCourseFromList(target.parentNode.id);
+				} else if (targetClass.indexOf('hover-box') >= 0) {
+					fLib.dispatchOpenCrsPopup(target, 'course-list-item');
+					hideCourseList();
 				} else {
 					isShowCourseList ? hideCourseList() : '' ;
 				}
-
 			}
 		},
 
 		setCourse: function (i) {
 			setSelectedCourse(i);
+		},
+
+		scrollToFeedback: function () {
+			feedbackSection.scrollIntoView();
 		}
 	}
 })();
@@ -944,18 +911,51 @@ var Footer = (function () {
 })();
 
 var fLib =  {
-	parallax: function (prlxBox, prlxBg, shift, slowdown) {
-		var coordTop = prlxBox.getBoundingClientRect().top;
-		if (!!coordTop && coordTop < window.innerHeight) {
-			prlxBg.style.bottom = shift+(coordTop-window.innerHeight)/slowdown + 'px';
+
+	parallax:
+		function (prlxBox, prlxBg, shift, slowdown) {
+			var coordTop = prlxBox.getBoundingClientRect().top;
+			if (!!coordTop && coordTop < window.innerHeight) {
+				prlxBg.style.bottom = shift+(coordTop-window.innerHeight)/slowdown + 'px';
+			}
+		},
+
+	getNext:
+		function (num, length) {
+			return num === length - 1 ? 0 : ++num;
+		},
+
+	getPrev:
+		function (num, length) {
+			return num === 0? length - 1 : --num;
+		},
+
+	dispatchOpenCrsPopup:
+		function (elem, parentClass) {
+			var onViewAllCourses = new CustomEvent('onViewAllCourses', { 'detail' : this.getParentId(elem, parentClass) } );
+			document.dispatchEvent(onViewAllCourses);
+		},
+
+	dispatchSetCourse:
+		function (target, parentClass) {
+			var onSetCourse = new CustomEvent('onSetCourse', { 'detail' : this.getParentId(target, parentClass) } );
+			document.dispatchEvent(onSetCourse);
+		},
+
+	getParentId:
+		function (elem, parentClass) {
+			var parentElem = elem.parentNode;
+			var crsId;
+
+			while (parentElem !== document.body && parentElem.className.indexOf(parentClass) < 0) {
+				parentElem = parentElem.parentNode;
+			}
+
+			crsId = parentElem === document.body ? null : parseInt(parentElem.id.split('_')[1]);
+
+			return crsId;
 		}
-	},
-	getNext: function (num, length) {
-		return num === length - 1 ? 0 : ++num;
-	},
-	getPrev: function (num, length) {
-		return num === 0? length - 1 : --num;
-	}
+
 };
 
 
