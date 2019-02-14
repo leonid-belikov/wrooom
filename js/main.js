@@ -2,7 +2,6 @@
 
 var App = (function () {
 
-
 	return {
 		init: function () {
 			Header.init();
@@ -529,7 +528,6 @@ var Indicators = (function () {
 		}
 	}
 
-
 	return {
 		init: function () {
 
@@ -632,7 +630,6 @@ var Instructors = (function () {
 		}
 	];
 	var instrItemsNum = instrArr.length > 3 ? 3 : instrArr.length;
-
 
 	function renderInstrBox() {
 		for (var i=0; i<instrItemsNum; i++) {
@@ -791,6 +788,7 @@ var Feedback = (function () {
 	var courseSelectBox =		document.querySelector('.course-select');
 	var courseListBox =			document.querySelector('.course-list');
 	var courseListArrowBox =	document.querySelector('.course-select-arrow');
+	var feedbackForm =			document.querySelector('.feedback form');
 	var isShowCourseList = false;
 
 	function addCourseList() {
@@ -867,6 +865,33 @@ var Feedback = (function () {
 		courseSelectBox.innerText = courses[i].header;
 	}
 
+	function submitFormHandler() {
+		feedbackForm.course.value = document.querySelector('.course-select').innerText;
+		if (!feedbackForm.name.value
+			|| !feedbackForm.email.value
+			|| !feedbackForm.phone.value
+			|| !feedbackForm.course.value
+		) {
+			console.log('Form is not completely filled');
+			return false;
+		}
+		console.log('');
+		console.log('------------------------');
+		console.log('------------------------');
+		console.log('Form need to submit with data:');
+		console.log('------------------------');
+		console.log('Name: ' + feedbackForm.name.value);
+		console.log('Email: ' + feedbackForm.email.value);
+		console.log('Phone: ' + feedbackForm.phone.value);
+		console.log('Course: ' + feedbackForm.course.value);
+		console.log('Comment: ' + feedbackForm.message.value);
+		console.log('------------------------');
+		console.log('Enter your server data processing and validate methods here');
+		console.log('------------------------');
+		console.log('------------------------');
+		return false;
+	}
+
 	return {
 		init: function () {
 			addCourseList();
@@ -889,10 +914,16 @@ var Feedback = (function () {
 				} else {
 					isShowCourseList ? hideCourseList() : '' ;
 				}
+			};
+
+			feedbackForm.onsubmit = function (event) {
+				event.preventDefault();
+				submitFormHandler();
 			}
 		},
 
 		setCourse: function (i) {
+			hideCourseList();
 			setSelectedCourse(i);
 		},
 

@@ -150,17 +150,18 @@
             <form action="">
                <div class="row justify-content-center">
                   <div class="col-3">
-                     <input type="text" placeholder="Your name">
+                     <input placeholder="Your name" name="name" required>
                   </div>
                   <div class="col-3">
-                     <input type="text" placeholder="Your e-mail">
+                     <input type="email" placeholder="Your e-mail" name="email" required>
                   </div>
                </div>
                <div class="row justify-content-center">
                   <div class="col-3">
-                     <input type="text" placeholder="Your phone">
+                     <input type="tel" placeholder="Your phone" name="phone" required>
                   </div>
                   <div class="col-3 course-list-block">
+                     <input type="hidden" name="course">
                      <div class="course-select">Course</div>
                      <div class="course-select-arrow"></div>
                      <ul class="course-list"></ul>
@@ -169,6 +170,11 @@
                <div class="row justify-content-center">
                   <div class="col-6">
                      <textarea name="message" id="" placeholder="Your message"></textarea>
+                  </div>
+               </div>
+               <div class="row justify-content-center">
+                  <div class="col-3">
+                     <input type="submit" value="send request" class="submit">
                   </div>
                </div>
             </form>

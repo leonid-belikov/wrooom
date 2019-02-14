@@ -48,6 +48,8 @@ footer
   font-size: 30px
   color: #888
 
+.hidden
+  display: none
 
 //header styles
 
@@ -615,7 +617,8 @@ $bg-popup: rgba(0, 0, 0, 0.7)
 
 .feedback
   padding: 105px 0
-  height: 710px
+  height: 100vh
+  min-height: 710px
   background: center -120px url("/img/feedback-bg.png") no-repeat
   color: $bg-text-light
   &-wrapper
@@ -647,6 +650,14 @@ $bg-popup: rgba(0, 0, 0, 0.7)
     textarea[name = "message"]
       height: 90px
       resize: none
+    input.submit
+      width: 140px
+      margin: 0 auto
+      display: block
+      border-radius: 23px
+      background: $bg-text-accent
+      text-transform: uppercase
+      color: $bg-text-extra-light
     div.course-select
       position: relative
       color: #757575
@@ -687,7 +698,7 @@ $bg-popup: rgba(0, 0, 0, 0.7)
             .img
               transform: translate(-81px, -43px) scale(4) rotateZ(-5deg)
               box-shadow: 2px 2px 7px 1px #000
-              transition: transform 650ms 250ms, opacity 150ms
+              transition: transform 650ms cubic-bezier(0.68, -0.22, 0.32, 1.28) 400ms, opacity 150ms
               cursor: pointer
               position: relative
               z-index: 50
@@ -715,7 +726,7 @@ $bg-popup: rgba(0, 0, 0, 0.7)
               font-size: 20px
               top: -100px
               left: 10px
-              transition: transform 250ms 500ms
+              transition: transform 250ms 700ms
               transform: none
             .title
               min-width: 80%

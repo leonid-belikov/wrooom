@@ -22,6 +22,9 @@ footer {
   font-size: 30px;
   color: #888; }
 
+.hidden {
+  display: none; }
+
 header {
   background-color: #182748;
   height: 75px;
@@ -548,7 +551,8 @@ header {
 
 .feedback {
   padding: 105px 0;
-  height: 710px;
+  height: 100vh;
+  min-height: 710px;
   background: center -120px url("/img/feedback-bg.png") no-repeat;
   color: #F0F0FD; }
   .feedback-wrapper {
@@ -580,6 +584,14 @@ header {
     .feedback form textarea[name="message"] {
       height: 90px;
       resize: none; }
+    .feedback form input.submit {
+      width: 140px;
+      margin: 0 auto;
+      display: block;
+      border-radius: 23px;
+      background: #103B99;
+      text-transform: uppercase;
+      color: #FFF; }
     .feedback form div.course-select {
       position: relative;
       color: #757575;
@@ -618,7 +630,7 @@ header {
         .feedback form .course-list-block .course-list-item:hover .img {
           transform: translate(-81px, -43px) scale(4) rotateZ(-5deg);
           box-shadow: 2px 2px 7px 1px #000;
-          transition: transform 650ms 250ms, opacity 150ms;
+          transition: transform 650ms cubic-bezier(0.68, -0.22, 0.32, 1.28) 400ms, opacity 150ms;
           cursor: pointer;
           position: relative;
           z-index: 50; }
@@ -646,7 +658,7 @@ header {
           font-size: 20px;
           top: -100px;
           left: 10px;
-          transition: transform 250ms 500ms;
+          transition: transform 250ms 700ms;
           transform: none; }
         .feedback form .course-list-block .course-list-item:hover .title {
           min-width: 80%;
