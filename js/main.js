@@ -124,10 +124,10 @@ var Reviews = (function () {
 
 	var currentReview = 0;
 
-	var reloadReview = function () {
+	function reloadReview() {
 		reviewTextBox.innerText = reviewsArr[currentReview].text;
 		reviewAuthorBox.innerText = reviewsArr[currentReview].author;
-	};
+	}
 
 	function activateArrow (arrowElem) {
 		arrowElem.innerHTML = '<img src="img/arrow-blue.png">';
@@ -637,7 +637,7 @@ var Instructors = (function () {
 		}
 	}
 
-	function renderInstrItem(num, toStart = false) {
+	function renderInstrItem(num, toStart) {
 		var instrItem =	document.createElement('div');
 		var avatar =		document.createElement('div');
 		var title =			document.createElement('div');
@@ -892,6 +892,16 @@ var Feedback = (function () {
 		return false;
 	}
 
+	function clearForm() {
+		var elements = feedbackForm.elements;
+		for (var i=0; i<elements.length; i++) {
+			if (elements[i].type !== 'submit') {
+				elements[i].value = '';
+			}
+		}
+		courseSelectBox.innerText = 'Course';
+	}
+
 	return {
 		init: function () {
 			addCourseList();
@@ -919,6 +929,7 @@ var Feedback = (function () {
 			feedbackForm.onsubmit = function (event) {
 				event.preventDefault();
 				submitFormHandler();
+				clearForm();
 			}
 		},
 
@@ -934,9 +945,14 @@ var Feedback = (function () {
 })();
 
 var Footer = (function () {
+
+	function renderContacts() {
+
+	}
+
 	return {
 		init: function () {
-			console.log('footer initialized');
+			renderContacts();
 		}
 	}
 })();
