@@ -555,16 +555,6 @@ var Instructors = (function () {
 	var instrBox =				document.querySelector('.instructors-block-items');
 	var leftArrowButton =	document.querySelector('.instructors .left-arrow');
 	var rightArrowButton =	document.querySelector('.instructors .right-arrow');
-	var socNets = {
-		'fb':
-			{'icon': '/img/fb-icon.png'},
-		'tw':
-			{'icon': '/img/tw-icon.png'},
-		'vk':
-			{'icon': '/img/vk-icon.png'},
-		'ig':
-			{'icon': '/img/ig-icon.png'}
-	};
 	var instrArr = [
 		{
 			avatar: '/img/avatar_1.png',
@@ -663,15 +653,7 @@ var Instructors = (function () {
 		if (hasLinks) {
 			hoverBox = document.createElement('div');
 			hoverBox.className = 'hover-box';
-			for (var socNet in instrArr[num].links) {
-				if (socNet in socNets) {
-					var socNetBtn = document.createElement('div');
-					socNetBtn.className = 'soc-net';
-					socNetBtn.innerHTML = '<a href="' + instrArr[num].links[socNet] + '" target="_blank"><img src="' + socNets[socNet].icon + '"></a>';
-					hoverBox.appendChild(socNetBtn);
-					socNetBtns.push(socNetBtn);
-				}
-			}
+			fLib.getSocNetsLinks(instrArr[num].links, hoverBox, socNetBtns);
 			avatar.appendChild(hoverBox);
 		}
 
@@ -945,14 +927,64 @@ var Feedback = (function () {
 })();
 
 var Footer = (function () {
+	var contactsInfoBlock = document.querySelector('.contacts-info');
+	var contactsInfo = [
+		{
+			value: 'Russia, St.Petersburg, Obuhov 120',
+			iconPath: '/img/region-icon.png'
+		},
+		{
+			value: '+7 986 666-44-34',
+			iconPath: '/img/call-icon.png'
+		},
+		{
+			value: 'hzmail@hz.com',
+			iconPath: '/img/mail-icon.png'
+		},
+		{
+			value: 'Mon-Fri 10:00 - 18:00',
+			iconPath: '/img/clock-icon.png'
+		}
+	];
+	var socNetsLinks = {
+		fb: '#',
+		tw: '#',
+		ig: '#'
+	};
 
 	function renderContacts() {
+		contactsInfo.forEach(function (item, index, arr) {
+			var infoItemBox = document.createElement('div');
+			var infoIconBox = document.createElement('div');
+			var infoIconImg = document.createElement('img');
+			var infoTextBox = document.createElement('div');
 
+			infoItemBox.className = 'contacts-info__item';
+			infoIconBox.className = 'contacts-info__item-icon';
+			infoTextBox.className = 'contacts-info__item-text';
+
+			infoTextBox.innerText = arr[index].value;
+			infoIconImg.setAttribute('src', arr[index].iconPath);
+
+			infoIconBox.appendChild(infoIconImg);
+			infoItemBox.appendChild(infoIconBox);
+			infoItemBox.appendChild(infoTextBox);
+
+			contactsInfoBlock.appendChild(infoItemBox);
+		});
+		var infoItemBoxArr = document.getElementsByClassName('contacts-info__item');
+		var lastInfoItem = infoItemBoxArr[infoItemBoxArr.length-1];
+		lastInfoItem.className += ' contacts-info__item-last';
+	}
+
+	function renderSocNets() {
+		fLib.getSocNetsLinks(socNetsLinks, contactsInfoBlock);
 	}
 
 	return {
 		init: function () {
 			renderContacts();
+			renderSocNets();
 		}
 	}
 })();
@@ -1001,6 +1033,32 @@ var fLib =  {
 			crsId = parentElem === document.body ? null : parseInt(parentElem.id.split('_')[1]);
 
 			return crsId;
+		},
+
+	getSocNetsLinks:
+		function(linksObj, linksBox, socNetBtns) {
+			var socNets = {
+				'fb':
+					{'icon': '/img/fb-icon.png'},
+				'tw':
+					{'icon': '/img/tw-icon.png'},
+				'vk':
+					{'icon': '/img/vk-icon.png'},
+				'ig':
+					{'icon': '/img/ig-icon.png'}
+			};
+
+			for (var socNet in linksObj) {
+				if (socNet in socNets) {
+					var socNetBtn = document.createElement('div');
+					socNetBtn.className = 'soc-net';
+					socNetBtn.innerHTML = '<a href="' + linksObj[socNet] + '" target="_blank"><img src="' + socNets[socNet].icon + '"></a>';
+					linksBox.appendChild(socNetBtn);
+					if (socNetBtns) {
+						socNetBtns.push(socNetBtn);
+					}
+				}
+			}
 		}
 
 };

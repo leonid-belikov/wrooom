@@ -708,19 +708,19 @@ footer {
     footer h2:after {
       background-color: #103B99;
       margin: 30px 0 60px 0; }
-  footer .contacts-info-item {
+  footer .contacts-info__item {
     font-size: 20px;
     margin-bottom: 20px;
     display: flex;
     height: 24px; }
-    footer .contacts-info-item__last {
+    footer .contacts-info__item-last {
       margin-bottom: 60px; }
-    footer .contacts-info-item .contacts-info-icon {
+    footer .contacts-info__item-icon {
       width: 40px;
       height: 100%;
       align-items: center;
       display: flex; }
-      footer .contacts-info-item .contacts-info-icon img {
+      footer .contacts-info__item-icon img {
         width: 24px; }
   footer .soc-net {
     display: inline-block;
