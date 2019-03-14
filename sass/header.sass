@@ -1,0 +1,42 @@
+header
+  background-color: $bg-text-dark
+  height: 75px
+  color: $text-light
+  display: flex
+  align-items: center
+  text-transform: uppercase
+  font-size: $text-l
+  position: fixed
+  width: 100%
+  top: 0
+  z-index: 999
+  transition: 0.5s
+  box-shadow: 0 5px 30px 13px rgba(0, 0, 0, 0.9)
+  .container
+    padding: 0 85px
+  nav
+    text-align: end
+    ul
+      margin: 0
+      li
+        display: inline-block
+        list-style: none
+        margin-left: 30px
+        a
+          position: relative
+          &:after
+            content: ''
+            height: 2px
+            margin-top: 8px
+            background-color: $bg-text-accent
+            width: 100%
+            display: block
+            position: absolute
+            transform: scale(0)
+            transition: 0.3s
+        &:hover a:after
+          transform: scale(1)
+  a
+    text-decoration: none
+    color: inherit
+

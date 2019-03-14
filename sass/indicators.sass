@@ -1,0 +1,31 @@
+.indicators
+  height: 330px
+  padding: 105px 0
+  position: relative
+  &-bg
+    background: 0 -500px url('/img/indc-bg.png') no-repeat
+    background-size: cover
+    height: 150%
+    position: absolute
+    left: 0
+    right: 0
+    z-index: -1
+  .indcItem
+    color: $bg-text-light
+    h3
+      font-size: 24px
+      text-align: center
+      text-transform: uppercase
+      font-weight: 400
+      &:after
+        background-color: $bg-text-light
+        content: ''
+        display: block
+        height: 2px
+        width: 70px
+        margin: 23px auto
+    .indcNum
+      text-align: center
+      font-size: 36px
+      font-weight: bold
+

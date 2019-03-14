@@ -1,0 +1,41 @@
+.advantages
+  padding: 105px 0
+  background-color: $bg-text-light
+  color: $bg-text-dark
+  h2:after
+    background-color: $bg-text-accent
+  &-tagline
+    text-align: center
+    font-size: $text-normal
+    padding: 0 60px
+    margin-top: 30px
+  &-block
+    display: flex
+    justify-content: space-between
+    margin-top: 30px
+    &-item
+      width: 25%
+      text-align: center
+      padding-bottom: 35px
+      transition: 1s
+      border-radius: 10px
+      perspective: 300px
+      &:hover img
+        filter: drop-shadow(0px 15px 3px rgba(0,0,0,0.4))
+        transform: translateZ(30px)
+      img
+        height: 70px
+        margin-bottom: 52px
+        margin-top: 30px
+        filter: drop-shadow(0px 7px 3px rgba(0,0,0,0.4))
+        transition: 1s
+      h3
+        margin-bottom: 30px
+        font-size: $text-l
+        text-transform: uppercase
+        transition: 1s
+      p
+        padding: 0 33px
+        transition: 1s
+        font-size: $text-normal
+

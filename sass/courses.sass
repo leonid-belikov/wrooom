@@ -1,0 +1,117 @@
+$button-height: 45px
+$line-width: 1px
+
+$bg-hoverbox: rgba(0, 0, 0, 0.3)
+$text-hoverbox: rgba(255, 255, 255, 0.5)
+
+$card-border-radius: 5px
+
+.courses
+  padding: 105px 0
+  min-height: 910px
+  background: $bg-text-light
+  color: $bg-text-dark
+  h2
+    text-align: start
+  h2:after
+    background-color: $bg-text-accent
+    margin-left: 0
+  .container
+    position: relative
+  .button
+    height: $button-height
+    border: solid $line-width $bg-text-accent
+    border-radius: ($button-height - 3)/2
+    text-transform: uppercase
+    text-align: center
+    padding-top: ($button-height - $text-normal - $line-width * 4)/2
+    cursor: pointer
+  .button-show
+    display: none
+    position: absolute
+    top: 0
+    right: 15px
+    width: 180px
+    background-color: $bg-text-extra-light
+    color: $bg-text-accent
+    &:hover
+      background-color: $bg-text-accent
+      color: $bg-text-extra-light
+  .courses-block
+    margin-top: 60px
+    padding: 0 15px
+    display: flex
+    justify-content: space-between
+    .courses-block-item
+      width: calc((100% - 60px)/3)
+      max-width: 380px
+      margin-bottom: 30px
+      position: relative
+      img
+        display: block
+        width: 100%
+        height: 246px
+        border-top-left-radius: $card-border-radius
+        border-top-right-radius: $card-border-radius
+      .hover-box
+        opacity: 0
+        transition: 1s
+        background: $bg-hoverbox
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 246px
+        text-transform: uppercase
+        font-size: $text-xxxl
+        padding: 40px 40px 40px 0
+        border-top-left-radius: $card-border-radius
+        border-top-right-radius: $card-border-radius
+        &:hover
+          opacity: 1
+          cursor: pointer
+          padding-left: 40px
+          color: $text-hoverbox
+          font-weight: bold
+      .content
+        border: solid 1px $line-gray
+        border-top: none
+        padding: 30px
+        background: $bg-text-extra-light
+        border-bottom-left-radius: $card-border-radius
+        border-bottom-right-radius: $card-border-radius
+        h3
+          text-transform: uppercase
+          &:after
+            content: ''
+            display: block
+            height: 2px
+            width: 70px
+            margin: 23px 0
+            background-color: $bg-text-accent
+        p
+          font-size: $text-normal
+          font-weight: 300
+          line-height: 1.5em
+        .cost
+          font-size: $text-cost
+          font-weight: bold
+          margin: 25px 0
+        .buttons
+          display: flex
+          justify-content: space-between
+          .button
+            width: calc(50% - 15px)
+            &.send
+              background-color: $bg-text-accent
+              color: $bg-text-extra-light
+              &:hover
+                border-color: $bg-text-dark
+                background-color: $bg-text-dark
+            &.read
+              background-color: $bg-text-extra-light
+              color: $bg-text-accent
+              &:hover
+                background-color: $bg-text-accent
+                color: $bg-text-extra-light
+

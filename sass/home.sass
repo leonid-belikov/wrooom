@@ -1,0 +1,59 @@
+.home
+  height: calc(100vh - 75px)
+  min-height: 600px
+  background: url("/img/home-bg.png") center -75px no-repeat
+  color: $text-light
+  text-align: right
+  margin-top: 75px
+  .container
+    padding: 0 85px
+  &-tag
+    font-size: $text-l
+    font-weight: 400
+    padding-top: 210px
+    margin-bottom: 14px
+  h1
+    font-size: $text-xxl
+    font-weight: 700
+    letter-spacing: 2px
+    text-transform: uppercase
+    span
+      color: $bg-text-accent
+    &:after
+      content: ''
+      display: block
+      height: 2px
+      width: 70px
+      background-color: $bg-text-accent
+      position: absolute
+      right: 15px
+      bottom: -20px
+  &-description
+    font-size: $text-normal
+    font-weight: 300
+    margin-top: 46px
+  .row-button
+    perspective: 10px
+    perspective-origin: right
+  &-button
+    height: 45px
+    width: 145px
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: $bg-text-accent
+    border-radius: 22px
+    margin-right: 15px
+    margin-top: 57px
+    text-transform: uppercase
+    font-size: $text-normal
+    transition: 0.5s
+    color: $text-light
+    text-decoration: none
+    cursor: pointer
+    &:hover
+      transform: translateZ(1px) rotateY(-0.5deg)
+      box-shadow: -15px 18px 20px 0px #000
+    &:active
+      transform: translateZ(-0.25px)
+

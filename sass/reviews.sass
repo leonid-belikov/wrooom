@@ -1,0 +1,38 @@
+.reviews
+  padding: 105px 0
+  height: 490px
+  position: relative
+  overflow: hidden
+  color: $text-light
+  h2:after
+    background-color: $text-light
+  &-bg
+    background-image: url('/img/reviews-bg.png')
+    background-size: cover
+    height: 150%
+    position: absolute
+    bottom: 150px
+    left: 0
+    right: 0
+    z-index: -1
+  .wrap
+    height: 235px
+    .content
+      padding: 0 90px
+    .arrow
+      display: flex
+      height: 100%
+      cursor: pointer
+      img
+        margin: auto 0
+    .right-arrow
+      justify-content: flex-end
+      img
+        transform: rotateZ(180deg)
+    .review
+      font-size: 20px
+      .text
+        margin: 60px 0
+        font-style: italic
+        line-height: 1.5em
+
